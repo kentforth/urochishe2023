@@ -3,7 +3,12 @@ import {db}  from '@/services/firebase'
 import { query, doc, collection, getDocs, addDoc } from 'firebase/firestore'
 
 import { onMounted } from "vue";
-import CollectionReference from "firebase/compat";
+import { CollectionReference } from 'firebase/firestore'
+
+export interface IRider extends CollectionReference{
+  name: string,
+  age: number
+}
 
 const riders = []
 
@@ -22,7 +27,7 @@ async function getRiders () {
 }
 
 async function onClick () {
-  const docData: CollectionReference = {
+  const docData: IRider = <IRider>{
     name: 'Вася',
     age: 35
   }
