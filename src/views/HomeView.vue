@@ -3,7 +3,6 @@ import {db}  from '@/services/firebase'
 import { query, doc, collection, getDocs, addDoc } from 'firebase/firestore'
 
 import { onMounted } from "vue";
-import firebase from "firebase/compat";
 import CollectionReference from "firebase/compat";
 
 const riders = []
@@ -20,7 +19,6 @@ async function getRiders () {
   docs.forEach((doc) => {
     riders.push(doc.data())
   });
-  console.log('RIDERS', riders)
 }
 
 async function onClick () {
