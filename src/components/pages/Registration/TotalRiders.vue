@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { defineProps } from "vue";
+
+const props = defineProps({
+  bicycles: {
+    type: Array,
+    required: true
+  }
+})
+
+// const { bicycles } = toRefs(props)
+
+function getImageUrl (type) {
+  switch (type) {
+    case "rigid":
+      return 'src/assets/images/icons/rigid.svg'
+    case "hardteil":
+      return 'src/assets/images/icons/hardteil.svg'
+    default:
+      return 'src/assets/images/icons/rigid.svg'
+  }
+}
+</script>
+
 <template>
   <div class="total">
     <h3>НАС УЖЕ:</h3>
@@ -15,33 +39,6 @@
     <h3>{{ bicycles.length }}</h3>
   </div>
 </template>
-
-<script>
-export default {
-  name: "TotalRiders",
-
-  props: {
-    bicycles: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  methods: {
-    // apply image url according to bicycle type
-    getImageUrl(type) {
-      switch (type) {
-        case "rigid":
-          return require("../../../assets/images/icons/rigid.svg");
-        case "hardteil":
-          return require("../../../assets/images/icons/hardteil.svg");
-        default:
-          return require("../../../assets/images/icons/rigid.svg");
-      }
-    },
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .total {

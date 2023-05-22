@@ -1,30 +1,147 @@
+<script setup lang="ts">
+import {
+  ref,
+  watch,
+  toRefs,
+  computed,
+  defineProps,
+  defineEmits
+} from "vue";
+
+import "firebase/firestore";
+// import { required } from "vuelidate/lib/validators";
+// import RadioButton from "@/components/RadioButton";
+import MaskedInput from "vue-masked-input";
+// import VueDadata from "vue-dadata";
+import RadioButtonGroup from "@/components/RadioButtonGroup";
+import {IForm} from "@/types";
+
+import { Form, Field } from 'vee-validate';
+
+const emit = defineEmits(['save-rider'])
+
+const props = defineProps({
+  formType: {
+    type: String,
+    default: "registration",
+  },
+  isRiderSaving: {
+    type: Boolean,
+    required: true,
+  },
+})
+
+const { formType, isRiderSaving} = toRefs(props)
+
+const isDisabled = true
+
+const form = ref<IForm>({
+  age: null,
+  city: "",
+  name: "",
+  phone: "",
+  number: 0,
+  gender: "М",
+  isAgree: false,
+  lastName: "",
+  category: "Гонщик",
+  bicycleType: "RIGID"
+})
+
+/*watch('$v.$error', (newUsername) => {
+  // Do something with the updated value.
+});*/
+
+/*  watch: {
+    "$v.$error": {
+      handler() {
+        this.isDisabled = this.isFormValid();
+      },
+      deep: true,
+    },
+  },*/
+
+/*  computed: {
+    isButtonDisabled() {
+      return this.isDisabled || !this.form.isAgree;
+    },
+  },*/
+
+/*  validations: {
+    form: {
+      name: { required },
+      last_name: { required },
+      age: { required },
+      city: { required },
+      phone: { required },
+    },
+  },*/
+
+function setIsAgree (agreement) {
+  form.value.isAgree = agreement;
+}
+
+function setGender (gender) {
+  form.value.gender = gender === "right" ? "Ж" : "М";
+}
+
+function setCategory (category) {
+  form.value.category = category === "right" ? "Исследователь" : "Гонщик";
+}
+
+function setBicycleType (type) {
+  form.value.bicycleType = type === "right" ? "HARDTAIL" : "RIGID";
+}
+
+function onSubmit (values) {
+  console.log('VALUES', values)
+  /*form.value.$touch();
+  if (this.$v.form.$error || this.isButtonDisabled) {
+    return;
+  }
+  form.value.age = +form.value.age;
+  emit("save-rider", form.value);*/
+}
+
+
+/*    isFormValid() {
+      const isValid = !Object.values(this.$v.form.$model).every(
+          (x) => x !== null && x !== ""
+      );
+      return isValid;
+    },*/
+
+</script>
+
 <template>
-  <form class="form" @submit.prevent="checkFormValidation">
+  <Form class="form" @submit="onSubmit">
     <div :class="isRiderSaving ? 'blur' : ''">
       <!--NAME-->
       <div class="form__item">
         <label for="name">ИМЯ:**</label>
-        <input
+        <Field
           autocomplete="off"
           type="text"
           id="name"
+          name="name"
           placeholder="Введите имя"
-          v-model.trim="$v.form.name.$model"
+          v-model.trim="form.name"
         />
-        <p class="error" v-if="$v.form.name.$error">Введите имя</p>
+<!--        <p class="error" v-if="$v.form.name.$error">Введите имя</p>-->
       </div>
 
       <!--LAST NAME-->
       <div class="form__item">
         <label for="last_name">ФАМИЛИЯ:</label>
-        <input
+        <Field
           type="text"
           autocomplete="off"
           id="last_name"
           placeholder="Введите фамилию"
-          v-model.trim="$v.form.last_name.$model"
+          name="lastName"
+          v-model.trim="form.lastName"
         />
-        <p class="error" v-if="$v.form.last_name.$error">Введите фамилию</p>
+<!--        <p class="error" v-if="$v.form.last_name.$error">Введите фамилию</p>-->
       </div>
 
       <!--GENDER-->
@@ -40,22 +157,24 @@
       <!--CONTACT INFO-->
       <div class="form__item">
         <label for="age">ВОЗРАСТ:</label>
-        <input
+        <Field
           type="number"
           id="age"
-          v-model.trim="$v.form.age.$model"
+          name="age"
+          v-model.trim="form.age"
           value="0"
           min="1"
         />
-        <p class="error" v-if="$v.form.age.$error">Введите возраст</p>
+<!--        <p class="error" v-if="$v.form.age.$error">Введите возраст</p>-->
       </div>
 
       <!--CITY-->
       <div class="form__item">
         <label>ГОРОД:</label>
-        <input
+        <Field
           id="city"
-          v-model.trim="$v.form.city.$model"
+          name="city"
+          v-model.trim="form.city"
           autocomplete="off"
         />
         <p class="error" v-if="$v.form.city.$error">Введите возраст</p>
@@ -64,15 +183,18 @@
       <!--PHONE-->
       <div class="form__item">
         <label>НОМЕР ТЕЛЕФОНА:</label>
-        <masked-input
-          v-model.trim="$v.form.phone.$model"
-          name="phone"
-          mask="\+\7 (111) 111-1111"
-          placeholder="Введите номер телефона"
-          type="tel"
-          autocomplete="off"
-        />
-        <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>
+        <Field>
+          <masked-input
+              v-model.trim="form.phone"
+              name="phone"
+              mask="\+\7 (111) 111-1111"
+              placeholder="Введите номер телефона"
+              type="tel"
+              autocomplete="off"
+          />
+<!--          <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>-->
+        </Field>
+        
       </div>
 
       <p class="error notion">
@@ -118,7 +240,6 @@
       <button
         type="submit"
         :class="isRiderSaving ? 'blur' : ''"
-        @click.prevent="checkFormValidation"
         class="btn-save"
         :disabled="true"
       >
@@ -139,117 +260,10 @@
         class="rhombus"
       />
     </div>
-  </form>
+  </Form>
 </template>
 
-<script>
-// import firebase from "firebase/app";
-import "firebase/firestore";
-import { required } from "vuelidate/lib/validators";
-// import RadioButton from "@/components/RadioButton";
-import MaskedInput from "vue-masked-input";
-// import VueDadata from "vue-dadata";
-import RadioButtonGroup from "@/components/RadioButtonGroup";
 
-export default {
-  name: "Form",
-
-  components: {
-    RadioButtonGroup,
-    // RadioButton,
-    MaskedInput,
-    // "vue-dadata": VueDadata,
-  },
-
-  props: {
-    formType: {
-      type: String,
-      default: "registration",
-    },
-    isRiderSaving: {
-      type: Boolean,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      isDisabled: true,
-      form: {
-        isAgree: false,
-        gender: "М",
-        name: "",
-        last_name: "",
-        age: null,
-        city: "",
-        phone: "",
-        bicycleType: "RIGID",
-        category: "Гонщик",
-        number: 0,
-      },
-    };
-  },
-
-  watch: {
-    "$v.$error": {
-      handler() {
-        this.isDisabled = this.isFormValid();
-      },
-      deep: true,
-    },
-  },
-
-  computed: {
-    isButtonDisabled() {
-      return this.isDisabled || !this.form.isAgree;
-    },
-  },
-
-  validations: {
-    form: {
-      name: { required },
-      last_name: { required },
-      age: { required },
-      city: { required },
-      phone: { required },
-    },
-  },
-
-  methods: {
-    setIsAgree(agreeemnt) {
-      this.form.isAgree = agreeemnt;
-    },
-
-    isFormValid() {
-      const isValid = !Object.values(this.$v.form.$model).every(
-        (x) => x !== null && x !== ""
-      );
-      return isValid;
-    },
-
-    setGender(gender) {
-      this.form.gender = gender === "right" ? "Ж" : "М";
-    },
-
-    setCategory(category) {
-      this.form.category = category === "right" ? "Исследователь" : "Гонщик";
-    },
-
-    setBicycleType(type) {
-      this.form.bicycleType = type === "right" ? "HARDTAIL" : "RIGID";
-    },
-
-    checkFormValidation() {
-      this.$v.form.$touch();
-      if (this.$v.form.$error || this.isButtonDisabled) {
-        return;
-      }
-      this.form.age = +this.form.age;
-      this.$emit("save-rider", this.form);
-    },
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .form {

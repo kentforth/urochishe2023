@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { defineEmits } from "vue";
+
+import ToggleSwitch from "@/components/ToggleSwitch";
+
+const emit = defineEmits(['change-agreement'])
+
+function changeAgreement (age) {
+  emit("change-agreement", age);
+}
+</script>
+
 <template>
   <div class="agreement">
     <div class="agreement__item">
@@ -62,28 +74,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import ToggleSwitch from "@/components/ToggleSwitch";
-export default {
-  name: "Agreement",
-
-  props: {
-    form: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  methods: {
-    changeAgreement(age) {
-      this.$emit("change-agreement", age);
-    },
-  },
-
-  components: { ToggleSwitch },
-};
-</script>
 
 <style scoped lang="scss">
 .agreement {

@@ -9,7 +9,23 @@ const router = createRouter({
         title: 'Главная'
       },
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/Home.vue')
+    },
+    {
+      path: '/registration',
+      meta: {
+        title: 'Регистрация'
+      },
+      name: 'registration',
+      component: () => import('../views/Registration.vue')
+    },
+    {
+      path: '/details',
+      meta: {
+        title: 'Детали'
+      },
+      name: 'details',
+      component: () => import('../views/Details.vue')
     }
   ]
 })
