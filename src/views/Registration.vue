@@ -139,7 +139,7 @@ async function saveRider (form) {
 </template>
 
 <style scoped lang="scss">
-.registration::v-deep {
+.registration {
   background-image: url("../assets/images/details-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
