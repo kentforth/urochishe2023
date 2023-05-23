@@ -1,3 +1,4 @@
+<!--
 <script setup lang="ts">
 import {
   ref,
@@ -114,7 +115,7 @@ function onSubmit (values) {
 <template>
   <Form class="form" @submit="onSubmit">
     <div :class="isRiderSaving ? 'blur' : ''">
-      <!--NAME-->
+      &lt;!&ndash;NAME&ndash;&gt;
       <div class="form__item">
         <label for="name">ИМЯ:**</label>
         <Field
@@ -125,10 +126,10 @@ function onSubmit (values) {
           placeholder="Введите имя"
           v-model.trim="form.name"
         />
-<!--        <p class="error" v-if="$v.form.name.$error">Введите имя</p>-->
+&lt;!&ndash;        <p class="error" v-if="$v.form.name.$error">Введите имя</p>&ndash;&gt;
       </div>
 
-      <!--LAST NAME-->
+      &lt;!&ndash;LAST NAME&ndash;&gt;
       <div class="form__item">
         <label for="last_name">ФАМИЛИЯ:</label>
         <Field
@@ -139,10 +140,10 @@ function onSubmit (values) {
           name="lastName"
           v-model.trim="form.lastName"
         />
-<!--        <p class="error" v-if="$v.form.last_name.$error">Введите фамилию</p>-->
+&lt;!&ndash;        <p class="error" v-if="$v.form.last_name.$error">Введите фамилию</p>&ndash;&gt;
       </div>
 
-      <!--GENDER-->
+      &lt;!&ndash;GENDER&ndash;&gt;
       <div class="form__item_gender">
         <label for="#">ПОЛ:</label>
         <RadioButtonGroup
@@ -152,7 +153,7 @@ function onSubmit (values) {
         />
       </div>
 
-      <!--CONTACT INFO-->
+      &lt;!&ndash;CONTACT INFO&ndash;&gt;
       <div class="form__item">
         <label for="age">ВОЗРАСТ:</label>
         <Field
@@ -163,10 +164,10 @@ function onSubmit (values) {
           value="0"
           min="1"
         />
-<!--        <p class="error" v-if="$v.form.age.$error">Введите возраст</p>-->
+&lt;!&ndash;        <p class="error" v-if="$v.form.age.$error">Введите возраст</p>&ndash;&gt;
       </div>
 
-      <!--CITY-->
+      &lt;!&ndash;CITY&ndash;&gt;
       <div class="form__item">
         <label>ГОРОД:</label>
         <Field
@@ -175,22 +176,22 @@ function onSubmit (values) {
           v-model.trim="form.city"
           autocomplete="off"
         />
-<!--        <p class="error" v-if="$v.form.city.$error">Введите возраст</p>-->
+&lt;!&ndash;        <p class="error" v-if="$v.form.city.$error">Введите возраст</p>&ndash;&gt;
       </div>
 
-      <!--PHONE-->
+      &lt;!&ndash;PHONE&ndash;&gt;
       <div class="form__item">
         <label>НОМЕР ТЕЛЕФОНА:</label>
         <input v-maska data-maska="+7 (###) ###-####" placeholder="999 9999999"/>
-<!--          <MaskedInput
+&lt;!&ndash;          <MaskedInput
               v-model.trim="form.phone"
               name="phone"
               mask="\+\7 (111) 111-1111"
               placeholder="Введите номер телефона"
               type="tel"
               autocomplete="off"
-          />-->
-<!--          <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>-->
+          />&ndash;&gt;
+&lt;!&ndash;          <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>&ndash;&gt;
       </div>
 
       <p class="error notion">
@@ -199,7 +200,7 @@ function onSubmit (values) {
         просто не в курсе как использовать информацию в корыстных целях)
       </p>
 
-      <!--BICYLE TYPE-->
+      &lt;!&ndash;BICYLE TYPE&ndash;&gt;
       <label>ВЕЛОСИПЕД:</label>
       <div class="form__bicycle-type-container">
         <div class="form__bicycle-type">
@@ -218,7 +219,7 @@ function onSubmit (values) {
         />
       </div>
 
-      <!--CATEGORY-->
+      &lt;!&ndash;CATEGORY&ndash;&gt;
       <div class="form__category">
         <label>КАТЕГОРИЯ:</label>
         <RadioButtonGroup
@@ -231,7 +232,7 @@ function onSubmit (values) {
       </div>
     </div>
 
-    <!--BUTTONS-->
+    &lt;!&ndash;BUTTONS&ndash;&gt;
     <div class="buttons" v-if="formType === 'registration'">
       <button
         type="submit"
@@ -239,11 +240,11 @@ function onSubmit (values) {
         class="btn-save"
         :disabled="true"
       >
-        <!--        <img
+        &lt;!&ndash;        <img
           v-if="!isButtonDisabled"
           src="../../../assets/images/icons/btn-finish.svg"
           alt="btn-finish"
-        />-->
+        />&ndash;&gt;
         <img
           src="../../../assets/images/icons/btn-finish-disabled.svg"
           alt="btn-finish-disabled"
@@ -258,8 +259,16 @@ function onSubmit (values) {
     </div>
   </Form>
 </template>
+-->
+<template>
+  <div>
+    sdfds
+  </div>
+</template>
 
+<script>
 
+</script>
 
 <style scoped lang="scss">
 .form {

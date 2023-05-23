@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {db}  from '@/services/firebase'
+/*import {db}  from '@/services/firebase'
 import { query, doc, collection, getDocs, addDoc } from 'firebase/firestore'
 
 import { onMounted } from "vue";
-import { CollectionReference } from 'firebase/firestore'
+import { CollectionReference } from 'firebase/firestore'*/
 
 import MainDetails from '@/components/pages/Main/MainDetails.vue'
 import MainContent from '@/components/pages/Main/MainContent.vue'
 import MainSponsors from '@/components/pages/Main/MainSponsors.vue'
 
-export interface IRider extends CollectionReference{
+/*export interface IRider extends CollectionReference{
   name: string,
   age: number
-}
+}*/
 
 const riders = []
 
-const ridersCollection = collection(db, 'riders')
+// const ridersCollection = collection(db, 'riders')
 
 /*
 onMounted(() => {

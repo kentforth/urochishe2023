@@ -1,4 +1,4 @@
-<script setup lang="js">
+<!--<script setup lang="js">
 import { 
   ref,
   onBeforeMount,
@@ -84,7 +84,7 @@ async function saveRider (form) {
       class="registration"
       :class="formType === 'payment' ? 'no-background' : ''"
   >
-    <!--DOWNLOAD ToEXCEL    -->
+    &lt;!&ndash;DOWNLOAD ToEXCEL    &ndash;&gt;
     <div class="download-buttons">
       <JsonExcel
           v-if="isExcelButtonVisible"
@@ -109,7 +109,7 @@ async function saveRider (form) {
     <div class="wrapper" v-if="formType === 'registration'">
       <TotalRiders v-if="formType === 'registration'" :bicycles="bicycles" />
 
-      <!--AGREEMENT-->
+      &lt;!&ndash;AGREEMENT&ndash;&gt;
       <Agreement
           v-if="formType === 'registration'"
           :form="form"
@@ -117,7 +117,7 @@ async function saveRider (form) {
           ref="agreement"
       />
 
-      <!--FORM-->
+      &lt;!&ndash;FORM&ndash;&gt;
       <Form
           v-if="formType === 'registration'"
           @save-rider="saveRider"
@@ -126,7 +126,7 @@ async function saveRider (form) {
       />
     </div>
 
-    <!--PAYMENT-->
+    &lt;!&ndash;PAYMENT&ndash;&gt;
     <div class="payment" v-if="formType === 'payment'">
       <div class="payment__content">
         <p>Поздравляем! Вы зарегестрировались на гонку</p>
@@ -136,8 +136,16 @@ async function saveRider (form) {
       </div>
     </div>
   </div>
+</template>-->
+<template>
+  <div>
+    sdgfsd
+  </div>
 </template>
 
+<script>
+
+</script>
 <style scoped lang="scss">
 .registration {
   background-image: url("../assets/images/details-bg.png");
