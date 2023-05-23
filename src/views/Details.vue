@@ -19,6 +19,10 @@ function downloadFiles () {
   alert("Файлы будут доступны с 12 июля 20.00");
 }
 
+function goToHome () {
+  router.push("/");
+}
+
 onBeforeMount(() => {
   window.scrollTo({ top: 0 });
 })
@@ -414,7 +418,7 @@ onBeforeMount(() => {
             </span>
           </div>
 
-          <Button :text="buttonText" :link="'Home'" class="btn-ok" />
+          <button class="btn-ok" @click="goToHome"/>
         </div>
       </div>
 

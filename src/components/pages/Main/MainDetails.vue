@@ -14,6 +14,28 @@ function goToDetails () {
 
 <template>
   <div class="details">
+    <img src="@/assets/images/main/logo.png" alt="logo" class="details__logo"/>
+    
+    <div class="details__buttons">
+      <button
+          class="details__btn"
+          @click="goToDetails"
+          @mouseleave="isHovered = false"
+          @mouseover="isHovered = true"
+      >
+        <img
+            v-if="isHovered"
+            src="@/assets/images/main/btn-details-hover.png"
+            alt="btn-details"
+        />
+        <img
+            v-else
+            src="@/assets/images/main/btn-details.png"
+            alt="btn-details-hover"
+        />
+      </button>
+    </div>
+    
     <p>
       (всякiй природный знакъ, мѣра, естественный межевой признакъ, как: рѣчка,
       гора, оврагъ, гривка, лѣсъ и пр.)
@@ -23,25 +45,7 @@ function goToDetails () {
       области <br />
       гонка-испытаніе маршрутами многоликаго притомья
     </h1>
-    <div class="buttons">
-      <button
-        class="details-btn"
-        @click="goToDetails"
-        @mouseleave="isHovered = false"
-        @mouseover="isHovered = true"
-      >
-        <img
-          v-if="isHovered"
-          src="../../../assets/images/main/btn-details-hover.svg"
-          alt="btn-details"
-        />
-        <img
-          v-else
-          src="../../../assets/images/main/btn-details.svg"
-          alt="btn-details-hover"
-        />
-      </button>
-    </div>
+    
   </div>
 </template>
 
@@ -50,6 +54,14 @@ function goToDetails () {
   color: $black;
   padding: 3% 5% 0 5%;
   text-align: center;
+  background: url('@/assets/images/main/contour-main-bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  &__logo {
+    width: 60%;
+  }
 
   p {
     font-size: 1.2vw;
@@ -65,7 +77,6 @@ function goToDetails () {
 
   h1 {
     margin-top: rem(10px);
-    margin-bottom: rem(25px);
     font-size: 1.8vw;
 
     @include responsive(tab-port) {
@@ -77,23 +88,24 @@ function goToDetails () {
     }
   }
 
-  .buttons {
+  &__buttons {
     width: 100%;
     display: flex;
     align-content: center;
     justify-content: center;
+    height: 140px;
+  }
 
-    .details-btn {
-      @include responsive(phone) {
-        margin-bottom: rem(20px);
-      }
-      
-      img {
-        width: 300px;
+  &__btn {
+    @include responsive(phone) {
+      margin-bottom: rem(20px);
+    }
 
-        @include responsive(tab-port) {
-          width: 150px;
-        }
+    img {
+      width: 300px;
+
+      @include responsive(tab-port) {
+        width: 150px;
       }
     }
   }

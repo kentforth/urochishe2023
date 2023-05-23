@@ -6,8 +6,8 @@ import { onMounted } from "vue";
 import { CollectionReference } from 'firebase/firestore'
 
 import MainDetails from '@/components/pages/Main/MainDetails.vue'
+import MainContent from '@/components/pages/Main/MainContent.vue'
 import MainSponsors from '@/components/pages/Main/MainSponsors.vue'
-import MainDownloadButtons from '@/components/pages/Main/MainDownloadButtons.vue'
 
 export interface IRider extends CollectionReference{
   name: string,
@@ -43,14 +43,9 @@ async function onClick () {
 
 <template>
   <div class="home">
-    <!--LOGO-->
-    <div class="logo">
-      <img src="../assets/images/main/logo.svg" alt="logo" />
-    </div>
-
     <MainDetails />
 
-    <MainDownloadButtons />
+    <MainContent />
 
     <MainSponsors />
   </div>

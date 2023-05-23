@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "firebase": "^9.22.0",
+    "maska": "^2.1.9",
     "vee-validate": "^4.9.5",
     "vue": "^3.3.2",
     "vue-json-excel3": "^0.0.9",
-    "vue-masked-input": "^0.5.2",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {

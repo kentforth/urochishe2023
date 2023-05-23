@@ -9,12 +9,10 @@ import {
 } from "vue";
 
 import "firebase/firestore";
-// import { required } from "vuelidate/lib/validators";
-// import RadioButton from "@/components/RadioButton";
-import MaskedInput from "vue-masked-input";
-// import VueDadata from "vue-dadata";
-import RadioButtonGroup from "@/components/RadioButtonGroup";
-import {IForm} from "@/types";
+import { vMaska } from "maska"
+import RadioButtonGroup from "../../RadioButtonGroup.vue";
+
+import { IForm } from "@/types";
 
 import { Form, Field } from 'vee-validate';
 
@@ -177,24 +175,22 @@ function onSubmit (values) {
           v-model.trim="form.city"
           autocomplete="off"
         />
-        <p class="error" v-if="$v.form.city.$error">Введите возраст</p>
+<!--        <p class="error" v-if="$v.form.city.$error">Введите возраст</p>-->
       </div>
 
       <!--PHONE-->
       <div class="form__item">
         <label>НОМЕР ТЕЛЕФОНА:</label>
-        <Field>
-          <masked-input
+        <input v-maska data-maska="+7 (###) ###-####" placeholder="999 9999999"/>
+<!--          <MaskedInput
               v-model.trim="form.phone"
               name="phone"
               mask="\+\7 (111) 111-1111"
               placeholder="Введите номер телефона"
               type="tel"
               autocomplete="off"
-          />
+          />-->
 <!--          <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>-->
-        </Field>
-        
       </div>
 
       <p class="error notion">
@@ -297,7 +293,7 @@ function onSubmit (values) {
       }
     }
 
-    &_gender::v-deep {
+    &_gender:deep {
       .checkbox {
         margin-top: 10px;
 
@@ -343,7 +339,7 @@ function onSubmit (values) {
     flex-direction: column;
     align-items: center;
 
-    .checkbox::v-deep {
+    .checkbox:deep {
       display: grid;
       grid-template-columns: 90px 206px 118px !important;
 
@@ -389,7 +385,7 @@ function onSubmit (values) {
     }
   }
 
-  &__category-item::v-deep {
+  &__category-item:deep {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -399,8 +395,8 @@ function onSubmit (values) {
     }
   }
 
-  &__category-item::v-deep > .checkbox__left,
-  &__category-item::v-deep > .checkbox__right {
+  &__category-item:deep > .checkbox__left,
+  &__category-item:deep > .checkbox__right {
     display: grid;
     align-items: center;
     margin-bottom: 20px;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineEmits } from "vue";
 
-import ToggleSwitch from "@/components/ToggleSwitch";
+import ToggleSwitch from "../../ToggleSwitch.vue";
 
 const emit = defineEmits(['change-agreement'])
 
