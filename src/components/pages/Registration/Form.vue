@@ -293,7 +293,7 @@ function onSubmit (values) {
       }
     }
 
-    &_gender:deep {
+    &_gender {
       .checkbox {
         margin-top: 10px;
 
@@ -339,7 +339,7 @@ function onSubmit (values) {
     flex-direction: column;
     align-items: center;
 
-    .checkbox:deep {
+    .checkbox {
       display: grid;
       grid-template-columns: 90px 206px 118px !important;
 
@@ -385,7 +385,7 @@ function onSubmit (values) {
     }
   }
 
-  &__category-item:deep {
+  &__category-item {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -395,8 +395,8 @@ function onSubmit (values) {
     }
   }
 
-  &__category-item:deep > .checkbox__left,
-  &__category-item:deep > .checkbox__right {
+  &__category-item > .checkbox__left,
+  &__category-item > .checkbox__right {
     display: grid;
     align-items: center;
     margin-bottom: 20px;
