@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
-  ref,
-  defineEmits
+  ref
 } from "vue";
 
 const boxClass = ref('')

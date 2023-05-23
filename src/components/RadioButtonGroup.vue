@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
-  ref,
-  defineProps,
-  defineEmits
+  ref
 } from "vue";
 
 const isCheckedLeft = ref(true)
