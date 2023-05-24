@@ -27,7 +27,7 @@ const form = ref<IRider>({
   category: "Гонщик",
   bicycleType: "RIGID"
 })
-const bicycles = ref([])
+const bicycles = ref<IRider[]>([])
 const formType = ref('registration')
 const riderNumber = ref(0)
 const isRiderSaving = ref(false)
