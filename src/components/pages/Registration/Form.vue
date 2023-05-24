@@ -46,6 +46,16 @@ const form = ref<IRider>({
   bicycleType: "ROAD"
 })
 
+const genders: ICheckbox[] = [
+  {
+    id: 1,
+    title: 'М',
+  },
+  {
+    id: 2,
+    title: 'Ж',
+  }
+]
 const bicycles: ICheckbox[] = [
   {
     id: 1,
@@ -60,7 +70,6 @@ const bicycles: ICheckbox[] = [
     title: 'Fixed/Single',
   }
 ]
-
 const categories: ICheckbox[] = [
   {
     id: 1,
@@ -69,17 +78,6 @@ const categories: ICheckbox[] = [
   {
     id: 2,
     title: 'исследователь',
-  }
-]
-
-const genders: ICheckbox[] = [
-  {
-    id: 1,
-    title: 'М',
-  },
-  {
-    id: 2,
-    title: 'Ж',
   }
 ]
 

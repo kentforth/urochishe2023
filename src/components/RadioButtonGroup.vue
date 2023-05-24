@@ -19,22 +19,7 @@ const props = defineProps({
 
 const { checkboxes } = toRefs(props)
 
-const isCheckedLeft = ref(true)
-const isCheckedRight = ref(false)
-
 let checkboxId = ref(1)
-
-function setCheckboxRight () {
-  isCheckedRight.value = true;
-  isCheckedLeft.value = false;
-  emit("choose-checkbox", "right");
-}
-
-function setCheckboxLeft () {
-  isCheckedRight.value = false;
-  isCheckedLeft.value = true;
-  emit("choose-checkbox", "left");
-}
 
 function changeCheckbox (id: number, title: string) {
   checkboxId.value = id
@@ -63,45 +48,6 @@ function changeCheckbox (id: number, title: string) {
         />
       </button>
     </div>
-<!--    <div class="checkbox__left">
-      <span>{{ titleLeft }}</span>
-      <div v-if="!isCheckedLeft" class="checkbox__container">
-        <img
-          @click="setCheckboxLeft"
-          src="../assets/images/icons/checkbox-unchecked.svg"
-          alt="checkbox-unchecked"
-          class="checkbox__unchecked"
-        />
-      </div>
-      <div v-else class="checkbox__container">
-        <img
-          @click="setCheckboxLeft"
-          src="../assets/images/icons/checkbox-checked.svg"
-          alt="checkbox-checked"
-          class="checkbox__checked"
-        />
-      </div>
-    </div>
-
-    <div class="checkbox__right" :class="checkboxRightClass">
-      <span>{{ titleRight }}</span>
-      <div v-if="!isCheckedRight" class="checkbox__container">
-        <img
-          @click="setCheckboxRight"
-          src="../assets/images/icons/checkbox-unchecked.svg"
-          alt="checkbox-unchecked"
-          class="checkbox__unchecked"
-        />
-      </div>
-      <div v-else class="checkbox__container">
-        <img
-          @click="setCheckboxRight"
-          src="../assets/images/icons/checkbox-checked.svg"
-          alt="checkbox-checked"
-          class="checkbox__checked"
-        />
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -148,6 +94,5 @@ function changeCheckbox (id: number, title: string) {
       height: 59px;
     }
   }
-
 }
 </style>
