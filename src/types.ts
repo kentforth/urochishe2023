@@ -6,7 +6,7 @@ export interface IRider {
   gender: string
   number: number
   isAgree: boolean
-  position: string
+  position: number | string
   category: string
   lastName: string
   bicycleType: string

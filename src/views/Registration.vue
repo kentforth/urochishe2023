@@ -5,7 +5,7 @@ import {
   onBeforeUnmount
 } from "vue";
 
-import { IRider } from '@/types';
+import type { IRider } from '@/types';
 
 /*import firebase from "firebase/app";
 import "firebase/firestore";*/
@@ -33,12 +33,12 @@ onBeforeUnmount(() => {
   window.removeEventListener("keyup", showPasswordPrompt);
 })
 
-function changeAgreement (hasAgreement) {
+function changeAgreement (hasAgreement: boolean) {
   isAgree = hasAgreement
   form.value.isAgree = hasAgreement
 }
 
-function showPasswordPrompt (event) {
+function showPasswordPrompt (event: any) {
   if (event.key === "F10") {
     if (prompt("Please enter password", '') === import.meta.env.VITE_PASSWORD) {
       isExcelButtonVisible.value = true;
@@ -46,7 +46,7 @@ function showPasswordPrompt (event) {
   }
 }
 
-function getRandomNumber (min, max) {
+function getRandomNumber (min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -64,7 +64,7 @@ function getAllData () {
       });*/
 }
 
-async function saveRider (form) {
+async function saveRider (form: IRider) {
   isRiderSaving.value = true;
   await getAllData();
   const lastNumber = bicycles.value.length

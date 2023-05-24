@@ -90,7 +90,7 @@ function setBicycleType (type: string) {
   form.value.bicycleType = type === "right" ? "HARDTAIL" : "RIGID";
 }
 
-function onSubmit (values) {
+function onSubmit (values: any) {
   console.log('VALUES', values)
   /*form.value.$touch();
   if (this.$v.form.$error || this.isButtonDisabled) {
