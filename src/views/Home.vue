@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {
+  onMounted
+} from "vue";
 /*import {db}  from '@/services/firebase'
 import { query, doc, collection, getDocs, addDoc } from 'firebase/firestore'
 
@@ -8,6 +11,11 @@ import { CollectionReference } from 'firebase/firestore'*/
 import MainDetails from '@/components/pages/Main/MainDetails.vue'
 import MainContent from '@/components/pages/Main/MainContent.vue'
 import MainSponsors from '@/components/pages/Main/MainSponsors.vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+  console.log('SCROLL')
+})
 
 /*export interface IRider extends CollectionReference{
   name: string,
