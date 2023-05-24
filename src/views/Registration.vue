@@ -14,7 +14,19 @@ import Form from "@/components/pages/Registration/Form.vue";
 import TotalRiders from '@/components/pages/Registration/TotalRiders.vue'
 import Agreement from "@/components/pages/Registration/Agreement.vue";
 
-const form = ref<IRider>({})
+const form = ref<IRider>({
+  age: null,
+  city: "",
+  name: "",
+  phone: "",
+  number: 0,
+  gender: "М",
+  isAgree: false,
+  lastName: "",
+  position: '0',
+  category: "Гонщик",
+  bicycleType: "RIGID"
+})
 const bicycles = ref([])
 const formType = ref('registration')
 const riderNumber = ref(0)
