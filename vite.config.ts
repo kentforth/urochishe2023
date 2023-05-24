@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import dns from 'dns'
 import vue from '@vitejs/plugin-vue'
+import checker from 'vite-plugin-checker'
 
 dns.setDefaultResultOrder('verbatim')
 
@@ -15,7 +16,7 @@ export default defineConfig({
       }
     }
   },
-  plugins: [vue()],
+  plugins: [vue(), checker({ typescript: true })],
   server: {
     host: 'localhost',
     port: 3000

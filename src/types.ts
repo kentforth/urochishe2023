@@ -10,3 +10,14 @@ export interface IForm {
   lastName: string
   bicycleType: string
 }
+
+export interface IRider {
+  age: number
+  name: string
+  phone: string
+  gender: string
+  number: number
+  category: string
+  lastName: string
+  bicycleType: string
+}

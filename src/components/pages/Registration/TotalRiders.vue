@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import { toRefs, PropType } from "vue";
+
+import { IRider } from "@/types";
+
 const props = defineProps({
   bicycles: {
-    type: Array,
+    type: Array as PropType<IRider[]>,
     required: true
   }
 })
 
-// const { bicycles } = toRefs(props)
+const { bicycles } = toRefs(props)
 
-function getImageUrl (type) {
+function getImageUrl (type: string) {
   switch (type) {
     case "rigid":
       return 'src/assets/images/icons/rigid.svg'
