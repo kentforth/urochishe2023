@@ -11,3 +11,8 @@ export interface IRider {
   lastName: string
   bicycleType: string
 }
+
+export interface ICheckbox {
+  id: number
+  title: string
+}

@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import {
-  ref
+  ref,
+  toRefs,
+  PropType,
 } from "vue";
+
+import type { ICheckbox} from "@/types";
+
+const emit = defineEmits(['change-checkbox'])
+
+const props = defineProps({
+  checkboxes: {
+    type: Array as PropType<ICheckbox[]>,
+    default: {},
+    required: true
+  }
+})
+
+const { checkboxes } = toRefs(props)
 
 const isCheckedLeft = ref(true)
 const isCheckedRight = ref(false)
 
-const emit = defineEmits(['choose-checkbox'])
-
-const props = defineProps({
-  titleLeft: {
-    type: String,
-    default: "",
-  },
-  titleRight: {
-    type: String,
-    default: "",
-  },
-  checkboxRightClass: {
-    type: String,
-    default: "checkbox-right-class",
-  },
-})
+let checkboxId = ref(1)
 
 function setCheckboxRight () {
   isCheckedRight.value = true;
@@ -35,11 +36,34 @@ function setCheckboxLeft () {
   emit("choose-checkbox", "left");
 }
 
+function changeCheckbox (id: number, title: string) {
+  checkboxId.value = id
+  emit('change-checkbox', title)
+}
+
 </script>
 
 <template>
-  <div class="checkbox">
-    <div class="checkbox__left">
+  <div class="radio-button-group">
+    <div v-for="checkbox in checkboxes" class="radio-button-group__item">
+      <div class="radio-button-group__title">{{checkbox.title}}</div>
+      
+      <button @click="changeCheckbox(checkbox.id, checkbox.title)">
+        <img 
+          v-if="checkboxId === checkbox.id"
+          src="../assets/images/icons/checkbox-checked.svg"
+          alt="checkbox-unchecked"
+          class="radio-button-group__checked"
+        />
+        <img
+          v-else
+          src="../assets/images/icons/checkbox-unchecked.svg"
+          alt="checkbox-unchecked"
+          class="radio-button-group__unchecked"
+        />
+      </button>
+    </div>
+<!--    <div class="checkbox__left">
       <span>{{ titleLeft }}</span>
       <div v-if="!isCheckedLeft" class="checkbox__container">
         <img
@@ -77,42 +101,33 @@ function setCheckboxLeft () {
           class="checkbox__checked"
         />
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <style scoped lang="scss">
-.checkbox {
+.radio-button-group {
   display: flex;
-  align-items: center;
-  align-content: center;
-
-  span {
-    width: max-content;
-    margin-left: 20px;
-    font-weight: 800;
-    font-size: 20px;
-
-    @include responsive(tab-port) {
-      font-size: 12px;
-    }
+  align-items: flex-end;
+  
+  &__title {
+    background: red;
+    margin-left: 10px;
   }
-
-  &__container {
-    height: 66px;
-    display: flex;
-    align-items: flex-end;
-
-    @include responsive(tab-port) {
-      height: 46px;
-    }
-  }
-
-  &__left,
-  &__right {
-    width: 90px;
+  
+  &__item {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-items: flex-end;
+    width: 66px;
+  }
+  
+  button {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 66px;
   }
 
   &__unchecked {
@@ -133,5 +148,6 @@ function setCheckboxLeft () {
       height: 59px;
     }
   }
+
 }
 </style>

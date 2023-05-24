@@ -10,9 +10,10 @@ import "firebase/firestore";
 // import { vMaska } from "maska"
 import RadioButtonGroup from "../../RadioButtonGroup.vue";
 
-import type { IRider } from "@/types";
+import type { IRider, ICheckbox} from "@/types";
 
 import { Form, Field } from 'vee-validate';
+import RadioButton from "@/components/RadioButton.vue";
 
 const emit = defineEmits(['save-rider'])
 
@@ -42,8 +43,45 @@ const form = ref<IRider>({
   lastName: "",
   position: '0',
   category: "Гонщик",
-  bicycleType: "RIGID"
+  bicycleType: "ROAD"
 })
+
+const bicycles: ICheckbox[] = [
+  {
+    id: 1,
+    title: 'ROAD',
+  },
+  {
+    id: 2,
+    title: 'MTB',
+  },
+  {
+    id: 3,
+    title: 'Fixed/Single',
+  }
+]
+
+const categories: ICheckbox[] = [
+  {
+    id: 1,
+    title: 'гонщик',
+  },
+  {
+    id: 2,
+    title: 'исследователь',
+  }
+]
+
+const genders: ICheckbox[] = [
+  {
+    id: 1,
+    title: 'М',
+  },
+  {
+    id: 2,
+    title: 'Ж',
+  }
+]
 
 /*watch('$v.$error', (newUsername) => {
   // Do something with the updated value.
@@ -87,11 +125,11 @@ function setCategory (category: string) {
 }
 
 function setBicycleType (type: string) {
-  form.value.bicycleType = type === "right" ? "HARDTAIL" : "RIGID";
+  form.value.bicycleType = type;
+  console.log('FORM', form.value)
 }
 
 function onSubmit (values: any) {
-  console.log('VALUES', values)
   /*form.value.$touch();
   if (this.$v.form.$error || this.isButtonDisabled) {
     return;
@@ -145,9 +183,7 @@ function onSubmit (values: any) {
       <div class="form__item_gender">
         <label for="#">ПОЛ:</label>
         <RadioButtonGroup
-          @choose-checkbox="setGender"
-          title-left="M"
-          title-right="Ж"
+          :checkboxes="genders"
         />
       </div>
 
@@ -209,22 +245,21 @@ function onSubmit (values: any) {
             class="form__bicycle-type_hardteil"
           />
         </div>
-        <RadioButtonGroup
+        <RadioButtonGroup :checkboxes="bicycles" @change-checkbox="setBicycleType"/>
+<!--        <RadioButtonGroup
           title-left="(RIGID)"
           title-right="(HARDTAIL)"
           checkbox-right-class="bicycle-right"
           @choose-checkbox="setBicycleType"
-        />
+        />-->
       </div>
 
       <!--CATEGORY-->
       <div class="form__category">
         <label>КАТЕГОРИЯ:</label>
         <RadioButtonGroup
+          :checkboxes="categories"
           class="form__category-item"
-          title-left="Гонщик"
-          title-right="Исследователь"
-          checkbox-right-class="bicycle-right"
           @choose-checkbox="setCategory"
         />
       </div>
