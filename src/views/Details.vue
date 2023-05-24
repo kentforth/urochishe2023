@@ -6,6 +6,9 @@ import {
 
 import { useRouter } from 'vue-router';
 
+import btnUnderstand from "@/assets/images/icons/btn-understand.svg"
+import btnUnderstandHover from "@/assets/images/icons/btn-understand-hover.svg"
+
 const router = useRouter()
 
 const buttonText = ref('понятно')
@@ -420,20 +423,25 @@ onBeforeMount(() => {
       </div>
 
       <button
-          class="content__btn-understand"
-          @click="goToMainPage"
-          @mouseover="isButtonHovered = true"
-          @mouseleave="isButtonHovered = false"
+        v-if="isButtonHovered"
+        class="content__btn-understand"
+        @click="goToMainPage"
+        @mouseleave="isButtonHovered = !isButtonHovered"
       >
         <img
-            src="../assets/images/icons/btn-understand.svg"
-            alt="btn-understand"
-            v-if="!isButtonHovered"
+          :src="btnUnderstandHover"
+          alt="btn-understand"
         />
+      </button>
+      <button
+        v-else
+        class="content__btn-understand"
+        @click="goToMainPage"
+        @mouseover="isButtonHovered = !isButtonHovered"
+      >
         <img
-            v-else
-            src="../assets/images/icons/btn-understand-hover.svg"
-            alt="btn-understand-hover"
+          :src="btnUnderstand"
+          alt="btn-understand"
         />
       </button>
     </div>

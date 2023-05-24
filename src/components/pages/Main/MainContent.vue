@@ -20,20 +20,25 @@ function goToRegistration () {
     <img src="../../../assets/images/main/wood.png" alt="wood" class="main-content__wood" />
 
     <button
-        class="main-content__register"
-        @click="goToRegistration"
-        @mouseover="isButtonRegisterHover = true"
-        @mouseleave="isButtonRegisterHover = false"
+      v-if="isButtonRegisterHover"
+      class="main-content__register"
+      @click="goToRegistration"
+      @mouseleave="isButtonRegisterHover = !isButtonRegisterHover"
     >
       <img
-          v-if="isButtonRegisterHover"
-          :src="btnRegisterHover"
-          alt="btn-register"
+        :src="btnRegisterHover"
+        alt="btn-register"
       />
+    </button>
+    <button
+        v-else
+        class="main-content__register"
+        @click="goToRegistration"
+        @mouseover="isButtonRegisterHover = !isButtonRegisterHover"
+    >
       <img
-          v-else
-          :src="btnRegister"
-          alt="btn-register"
+        :src="btnRegister"
+        alt="btn-register"
       />
     </button>
   </div>

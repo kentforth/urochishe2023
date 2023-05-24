@@ -21,20 +21,25 @@ function goToDetails () {
     
     <div class="details__buttons">
       <button
+          v-if="isHovered"
           class="details__btn"
           @click="goToDetails"
-          @mouseleave="isHovered = false"
-          @mouseover="isHovered = true"
+          @mouseleave="isHovered = !isHovered"
       >
         <img
-            v-if="isHovered"
             :src="btnDetailsHover"
             alt="btn-details"
         />
+      </button>
+      <button
+          v-else
+          class="details__btn"
+          @click="goToDetails"
+          @mouseover="isHovered = !isHovered"
+      >
         <img
-            v-else
-            :src="btnDetails"
-            alt="btn-details-hover"
+          :src="btnDetails"
+          alt="btn-details-hover"
         />
       </button>
     </div>
