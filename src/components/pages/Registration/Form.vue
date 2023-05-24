@@ -4,15 +4,13 @@ import {
   watch,
   toRefs,
   computed,
-  defineProps,
-  defineEmits
 } from "vue";
 
 import "firebase/firestore";
 // import { vMaska } from "maska"
 import RadioButtonGroup from "../../RadioButtonGroup.vue";
 
-import { IRider } from "@/types";
+import type { IRider } from "@/types";
 
 import { Form, Field } from 'vee-validate';
 
@@ -42,6 +40,7 @@ const form = ref<IRider>({
   gender: "М",
   isAgree: false,
   lastName: "",
+  position: '0',
   category: "Гонщик",
   bicycleType: "RIGID"
 })
@@ -75,19 +74,19 @@ const form = ref<IRider>({
     },
   },*/
 
-function setIsAgree (agreement) {
+function setIsAgree (agreement: boolean) {
   form.value.isAgree = agreement;
 }
 
-function setGender (gender) {
+function setGender (gender: string) {
   form.value.gender = gender === "right" ? "Ж" : "М";
 }
 
-function setCategory (category) {
+function setCategory (category: string) {
   form.value.category = category === "right" ? "Исследователь" : "Гонщик";
 }
 
-function setBicycleType (type) {
+function setBicycleType (type: string) {
   form.value.bicycleType = type === "right" ? "HARDTAIL" : "RIGID";
 }
 
