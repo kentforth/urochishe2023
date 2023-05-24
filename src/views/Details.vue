@@ -11,7 +11,6 @@ import btnUnderstandHover from "@/assets/images/icons/btn-understand-hover.svg"
 
 const router = useRouter()
 
-const buttonText = ref('понятно')
 const isButtonHovered = ref(false)
 
 function goToMainPage () {

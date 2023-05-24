@@ -1,4 +1,4 @@
-export interface IForm {
+export interface IRider {
   age: number | null
   name: string
   city: string
@@ -6,17 +6,6 @@ export interface IForm {
   gender: string
   number: number
   isAgree: boolean
-  category: string
-  lastName: string
-  bicycleType: string
-}
-
-export interface IRider {
-  age: number
-  name: string
-  phone: string
-  gender: string
-  number: number
   position: string
   category: string
   lastName: string

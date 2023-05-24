@@ -1,16 +1,20 @@
-<!--<script setup lang="js">
+<script setup lang="ts">
 import { 
   ref,
   onBeforeMount,
   onBeforeUnmount
 } from "vue";
+
+import { IRider } from '@/types';
+
 /*import firebase from "firebase/app";
 import "firebase/firestore";*/
-import Form from "../components/pages/Registration/Form.vue";
-import TotalRiders from '../components/pages/Registration/TotalRiders.vue'
-import Agreement from "../components/pages/Registration/Agreement.vue";
 
-const form = ref({})
+import Form from "@/components/pages/Registration/Form.vue";
+import TotalRiders from '@/components/pages/Registration/TotalRiders.vue'
+import Agreement from "@/components/pages/Registration/Agreement.vue";
+
+const form = ref<IRider>({})
 const bicycles = ref([])
 const formType = ref('registration')
 const riderNumber = ref(0)
@@ -29,9 +33,9 @@ onBeforeUnmount(() => {
   window.removeEventListener("keyup", showPasswordPrompt);
 })
 
-function changeAgreement (agreement) {
-  isAgree = agreement;
-  form.value.setIsAgree(agreement);
+function changeAgreement (hasAgreement) {
+  isAgree = hasAgreement
+  form.value.isAgree = hasAgreement
 }
 
 function showPasswordPrompt (event) {
@@ -84,9 +88,9 @@ async function saveRider (form) {
       class="registration"
       :class="formType === 'payment' ? 'no-background' : ''"
   >
-    &lt;!&ndash;DOWNLOAD ToEXCEL    &ndash;&gt;
+    <!--DOWNLOAD ToEXCEL    -->
     <div class="download-buttons">
-      <JsonExcel
+<!--      <JsonExcel
           v-if="isExcelButtonVisible"
           :data="bicycles"
           class="btn-excel"
@@ -103,31 +107,28 @@ async function saveRider (form) {
         }"
       >
         <span>Сохранить в excel</span>
-      </JsonExcel>
+      </JsonExcel>-->
     </div>
 
     <div class="wrapper" v-if="formType === 'registration'">
-      <TotalRiders v-if="formType === 'registration'" :bicycles="bicycles" />
+      <TotalRiders :bicycles="bicycles" />
 
-      &lt;!&ndash;AGREEMENT&ndash;&gt;
+      <!--AGREEMENT-->
       <Agreement
-          v-if="formType === 'registration'"
-          :form="form"
-          @change-agreement="changeAgreement"
-          ref="agreement"
+        @change-agreement="changeAgreement"
+        ref="agreement"
       />
 
-      &lt;!&ndash;FORM&ndash;&gt;
+      <!--FORM-->
       <Form
-          v-if="formType === 'registration'"
-          @save-rider="saveRider"
-          ref="form"
-          :is-rider-saving="isRiderSaving"
+        @save-rider="saveRider"
+        ref="form"
+        :is-rider-saving="isRiderSaving"
       />
     </div>
 
-    &lt;!&ndash;PAYMENT&ndash;&gt;
-    <div class="payment" v-if="formType === 'payment'">
+    <!--PAYMENT-->
+    <div class="payment" v-else>
       <div class="payment__content">
         <p>Поздравляем! Вы зарегестрировались на гонку</p>
         <p>Урочище</p>
@@ -136,16 +137,8 @@ async function saveRider (form) {
       </div>
     </div>
   </div>
-</template>-->
-<template>
-  <div>
-    sdgfsd
-  </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
 <style scoped lang="scss">
 .registration {
   background-image: url("../assets/images/details-bg.png");

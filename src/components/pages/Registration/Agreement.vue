@@ -3,8 +3,8 @@ import ToggleSwitch from "../../ToggleSwitch.vue";
 
 const emit = defineEmits(['change-agreement'])
 
-function changeAgreement (age: number) {
-  emit("change-agreement", age);
+function changeAgreement (isAgree: boolean) {
+  emit("change-agreement", isAgree);
 }
 </script>
 
