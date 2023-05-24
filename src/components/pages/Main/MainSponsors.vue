@@ -1,56 +1,67 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import fil from "@/assets/images/main/icons/fil.png"
+import ejik from "@/assets/images/main/icons/ejik.png"
+import noji from "@/assets/images/main/icons/noji.png"
+import nerpa from "@/assets/images/main/icons/nerpa.png"
+import polar from "@/assets/images/main/icons/polar.png"
+import proto from "@/assets/images/main/icons/proto.png"
+import fatrat from "@/assets/images/main/icons/fatrat.png"
+import zukling from "@/assets/images/main/icons/zukling.png"
+import sarmatina from "@/assets/images/main/icons/sarmatina.png"
+import itsmybike from "@/assets/images/main/icons/itsmybike.png"
+
 const sponsors = ref([
   {
     alt: "nerpa",
     url: "https://vk.com/nerpagear",
-    image: 'src/assets/images/main/icons/nerpa.png',
+    image: nerpa,
   },
   {
-    alt: "cycling",
+    alt: "zukling",
     url: "https://vk.com/cykling",
-    image: 'src/assets/images/main/icons/zukling.png',
+    image: zukling,
   },
   {
     alt: "ejik",
     url: "https://vk.com/hedgehoggbags",
-    image: 'src/assets/images/main/icons/ejik.png',
+    image: ejik,
   },
   {
     alt: "fatrat",
     url: "https://vk.com/club19154833",
-    image: 'src/assets/images/main/icons/fatrat.png',
+    image: fatrat,
   },
   {
     alt: "polar",
     url: "https://vk.com/polarfoxbikepack",
-    image: 'src/assets/images/main/icons/polar.png',
+    image: polar,
   },
   {
-    alt: "fil",
+    alt: fil,
     url: "https://www.instagram.com/phils_crafts/",
-    image: 'src/assets/images/main/icons/fil.png',
+    image: fil,
   },
   {
     alt: "sarmatina",
     url: "https://vk.com/sarmatian_ways",
-    image: 'src/assets/images/main/icons/sarmatina.png',
+    image: sarmatina,
   },
   {
     alt: "noji",
     url: "https://vk.com/knifetomsk",
-    image: 'src/assets/images/main/icons/noji.png',
+    image: noji,
   },
   {
     alt: "itsmybike",
     url: "https://vk.com/itsmybike",
-    image: 'src/assets/images/main/icons/itsmybike.png',
+    image: itsmybike,
   },
   {
     alt: "proto",
     url: "https://vk.com/protostudia",
-    image: 'src/assets/images/main/icons/proto.png',
+    image: proto,
   },
 ])
 
