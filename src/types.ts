@@ -17,6 +17,7 @@ export interface IRider {
   phone: string
   gender: string
   number: number
+  position: string
   category: string
   lastName: string
   bicycleType: string

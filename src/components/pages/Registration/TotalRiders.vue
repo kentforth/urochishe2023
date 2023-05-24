@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { toRefs, PropType } from "vue";
+import { toRefs } from "vue";
+import type { PropType } from 'vue'
 
 import { IRider } from "@/types";
 
@@ -34,7 +35,7 @@ function getImageUrl (type: string) {
         :src="getImageUrl(bicycle.bicycleType)"
         alt="RD"
         v-for="bicycle in bicycles"
-        :key="bicycle['.key']"
+        :key="bicycle.lastName"
         :style="{ left: bicycle.position + '%' }"
       />
     </div>
