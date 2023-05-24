@@ -3,6 +3,9 @@ import { ref } from 'vue'
 
 import { useRouter } from 'vue-router';
 
+import btnRegister from "@/assets/images/main/btn-register.png"
+import btnRegisterHover from "@/assets/images/main/btn-register-hover.png"
+
 const router = useRouter()
 
 const isButtonRegisterHover = ref(false)
@@ -24,12 +27,12 @@ function goToRegistration () {
     >
       <img
           v-if="isButtonRegisterHover"
-          src="../../../assets/images/main/btn-register-hover.png"
+          :src="btnRegisterHover"
           alt="btn-register"
       />
       <img
           v-else
-          src="../../../assets/images/main/btn-register.png"
+          :src="btnRegister"
           alt="btn-register"
       />
     </button>

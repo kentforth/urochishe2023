@@ -3,6 +3,9 @@ import { ref } from 'vue'
 
 import { useRouter } from 'vue-router';
 
+import btnDetails from "@/assets/images/main/btn-details.png"
+import btnDetailsHover from "@/assets/images/main/btn-details-hover.png"
+
 const router = useRouter()
 
 const isHovered = ref(false)
@@ -25,12 +28,12 @@ function goToDetails () {
       >
         <img
             v-if="isHovered"
-            src="@/assets/images/main/btn-details-hover.png"
+            :src="btnDetailsHover"
             alt="btn-details"
         />
         <img
             v-else
-            src="@/assets/images/main/btn-details.png"
+            :src="btnDetails"
             alt="btn-details-hover"
         />
       </button>
