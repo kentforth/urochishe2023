@@ -143,7 +143,7 @@ async function saveRider (form) {
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 
 </script>
 <style scoped lang="scss">

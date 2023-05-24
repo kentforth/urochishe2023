@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { toRefs } from "vue";
 import type { PropType } from 'vue'
-
-import { IRider } from "@/types";
+import type { IRider } from "@/types";
 
 const props = defineProps({
   bicycles: {
