@@ -168,7 +168,7 @@ async function getRiders () {
   
   const docs = await getDocs(q)
   riders.value = []
-  docs.forEach((doc) => {
+  docs.forEach((doc: any) => {
     riders.value.push(doc.data())
   });
 }
