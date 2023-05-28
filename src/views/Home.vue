@@ -14,7 +14,6 @@ import MainSponsors from '@/components/pages/Main/MainSponsors.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-  console.log('SCROLL')
 })
 
 /*export interface IRider extends CollectionReference{

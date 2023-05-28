@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import ToggleSwitch from "../../ToggleSwitch.vue";
 
-const emit = defineEmits(['change-agreement'])
+const emit = defineEmits(['set-agreement'])
 
 function changeAgreement (isAgree: boolean) {
-  emit("change-agreement", isAgree);
+  emit("set-agreement", isAgree);
 }
 </script>
 

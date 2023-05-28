@@ -1,25 +1,39 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
+import { 
+  toRefs, 
+  computed 
+} from "vue";
+
 import type { PropType } from 'vue'
 import type { IRider } from "@/types";
 
+import mtb from "@/assets/images/icons/mtb.png"
+import road from "@/assets/images/icons/road.png"
+import singleSpeed from "@/assets/images/icons/single-speed.png"
+
 const props = defineProps({
-  bicycles: {
+  riders: {
     type: Array as PropType<IRider[]>,
     required: true
   }
 })
 
-const { bicycles } = toRefs(props)
+const { riders } = toRefs(props)
+
+const totalRiders = computed(() => {
+  return riders.value.length ? riders.value.length : ''
+})
 
 function getImageUrl (type: string) {
   switch (type) {
-    case "rigid":
-      return 'src/assets/images/icons/rigid.svg'
-    case "hardteil":
-      return 'src/assets/images/icons/hardteil.svg'
+    case "(ROAD)":
+      return road
+    case "(MTB)":
+      return mtb
+    case "(Fixed/Single)":
+      return singleSpeed
     default:
-      return 'src/assets/images/icons/rigid.svg'
+      return road
   }
 }
 </script>
@@ -31,14 +45,14 @@ function getImageUrl (type: string) {
     <!--BICYCLES-->
     <div class="total__bicycles">
       <img
-        :src="getImageUrl(bicycle.bicycleType)"
+        :src="getImageUrl(rider.bicycleType)"
         alt="RD"
-        v-for="bicycle in bicycles"
-        :key="bicycle.lastName"
-        :style="{ left: bicycle.position + '%' }"
+        v-for="rider in riders"
+        :key="rider.lastName"
+        :style="{ left: rider.position + '%' }"
       />
     </div>
-    <h3>{{ bicycles.length }}</h3>
+    <h3>{{ totalRiders }}</h3>
   </div>
 </template>
 
@@ -55,6 +69,10 @@ function getImageUrl (type: string) {
     font-size: rem(25px);
     margin: 0;
     line-height: 15px;
+    
+    &:last-child {
+      margin-left: 40px;
+    }
   }
 
   @include responsive(phone) {

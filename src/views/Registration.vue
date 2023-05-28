@@ -1,55 +1,50 @@
 <script setup lang="ts">
-import { 
+import {
   ref,
   onBeforeMount,
-  onBeforeUnmount
+  onBeforeUnmount, computed
 } from "vue";
 
-import type { IRider } from '@/types';
+import "firebase/firestore";
+import { db }  from '@/services/firebase'
+import {
+  query,
+  doc,
+  collection,
+  getDocs,
+  addDoc
+} from 'firebase/firestore'
 
-/*import firebase from "firebase/app";
-import "firebase/firestore";*/
+import type { IRider } from '@/types';
 
 import Form from "@/components/pages/Registration/Form.vue";
 import TotalRiders from '@/components/pages/Registration/TotalRiders.vue'
 import Agreement from "@/components/pages/Registration/Agreement.vue";
 
-
-
-const form = ref<IRider>({
-  age: null,
-  city: "",
-  name: "",
-  phone: "",
-  number: 0,
-  gender: "М",
-  isAgree: false,
-  lastName: "",
-  position: '0',
-  category: "Гонщик",
-  bicycleType: "RIGID"
-})
-const bicycles = ref<IRider[]>([])
+const form = ref<Form | null>(null)
+const riders = ref<IRider[]>([])
 const formType = ref('registration')
 const riderNumber = ref(0)
-const isRiderSaving = ref(false)
+const isSubmitDisabled = ref(true)
 const isExcelButtonVisible = ref(false)
-
-let isAgree = false
 
 onBeforeMount(() => {
   window.addEventListener("keydown", showPasswordPrompt);
   window.scrollTo({ top: 0 });
-  getAllData();
+  getRiders();
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener("keyup", showPasswordPrompt);
 })
 
-function changeAgreement (hasAgreement: boolean) {
-  isAgree = hasAgreement
-  form.value.isAgree = hasAgreement
+function setAgreement (hasAgreement: boolean) {
+  isSubmitDisabled.value = !hasAgreement
+}
+
+function saveRider (number: string | number) {
+  riderNumber.value = number
+  formType.value = 'payment'
 }
 
 function showPasswordPrompt (event: any) {
@@ -60,40 +55,16 @@ function showPasswordPrompt (event: any) {
   }
 }
 
-function getRandomNumber (min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+async function getRiders () {
+  riders.value = []
+  const q = await query(collection(db, 'riders'));
+  const docs = await getDocs(q)
+  docs.forEach((doc) => {
+    riders.value.push(doc.data())
+  });
 }
 
-function getAllData () {
-  /*this.bicycles = [];
-  return firebase
-      .firestore()
-      .collection("riders")
-      .orderBy("number")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((document) => {
-          this.bicycles.push(document.data());
-        });
-      });*/
-}
 
-async function saveRider (form: IRider) {
-  isRiderSaving.value = true;
-  await getAllData();
-  const lastNumber = bicycles.value.length
-      ? bicycles.value[bicycles.value.length - 1].number
-      : 0;
-  const rider = Object.assign({}, form);
-  rider.number = lastNumber + 1;
-  riderNumber.value = rider.number;
-  rider.position = getRandomNumber(0, 85);
-
-  // await firebase.firestore().collection("riders").add(rider);
-  await getAllData();
-  isRiderSaving.value = false;
-  formType.value = "payment";
-}
 
 </script>
 
@@ -125,19 +96,16 @@ async function saveRider (form: IRider) {
     </div>
 
     <div class="wrapper" v-if="formType === 'registration'">
-      <TotalRiders :bicycles="bicycles" />
+      <TotalRiders :riders="riders" />
 
       <!--AGREEMENT-->
-      <Agreement
-        @change-agreement="changeAgreement"
-        ref="agreement"
-      />
+      <Agreement @set-agreement="setAgreement" />
 
       <!--FORM-->
       <Form
-        @save-rider="saveRider"
         ref="form"
-        :is-rider-saving="isRiderSaving"
+        :is-disabled="isSubmitDisabled"
+        @save-rider="saveRider"
       />
     </div>
 

@@ -26,7 +26,11 @@ import { vMaska } from "maska"
 import "firebase/firestore";
 import { db }  from '@/services/firebase'
 import { 
-  query, doc, collection, getDocs, addDoc, CollectionReference } from 'firebase/firestore'
+  query, 
+  addDoc,
+  getDocs,
+  collection
+} from 'firebase/firestore'
 
 import RadioButtonGroup from "../../RadioButtonGroup.vue";
 
@@ -46,20 +50,15 @@ configure({
 const emit = defineEmits(['save-rider'])
 
 const props = defineProps({
-  formType: {
-    type: String,
-    default: "registration",
-  },
-  isRiderSaving: {
+  isDisabled: {
     type: Boolean,
-    required: true,
-  },
+    default: true
+  }
 })
 
-const { formType, isRiderSaving} = toRefs(props)
+const { isRiderSaving, isDisabled } = toRefs(props)
 
 let isPhoneValid  = true
-const isDisabled = true
 const ridersCollection = collection(db, 'riders')
 
 const form = ref<IRider>({
@@ -90,6 +89,7 @@ const bicycleTypes = ref([
   }
 ])
 
+const isSaving = ref(false)
 const riders = ref<IRider[]>([])
 const genders: ICheckbox[] = [
   {
@@ -187,15 +187,18 @@ async function onSubmit (errors: any) {
   if (!form.value.phone || Object.keys(errors).length !== 0) return
   
   form.value.position = getRandomNumber(0, 100)
-  console.log('SUCCESS', form.value)
 
-  await getRiders()
-  console.log('RIDERS LENGTH', riders.value.length)
-  form.value.number = riders.value.length ? riders.value.length + 1 : 1 
-  
-  console.log('VALUE', form.value.number)
-  
-  await addDoc(ridersCollection, form.value)
+  try {
+    await getRiders()
+    form.value.number = riders.value.length ? riders.value.length + 1 : 1
+
+    isSaving.value = true
+    await addDoc(ridersCollection, form.value)
+    isSaving.value = false
+    emit('save-rider', form.value.number)
+  } catch (e) {
+    console.log('ERROR', e)
+  }
 }
 </script>
 
@@ -320,25 +323,27 @@ async function onSubmit (errors: any) {
     </div>
 
     <!--BUTTONS-->
-    <div class="buttons" v-if="formType === 'registration'">
+    <div class="buttons">
       <button
+        :disabled="isDisabled"
         :class="isRiderSaving ? 'blur' : ''"
         class="btn-save"
         @click="onSubmit(errors)"
       >
-          <img
+        <img
+          v-if="isDisabled"
+          src="../../../assets/images/icons/btn-finish-disabled.svg"
+          alt="btn-finish-disabled"
+        />
+        <img
+          v-else
           src="../../../assets/images/icons/btn-finish.svg"
           alt="btn-finish"
           class="form__btn-save"
         />
-<!--        <img
-          v-else
-          src="../../../assets/images/icons/btn-finish-disabled.svg"
-          alt="btn-finish-disabled"
-        />-->
       </button>
       <img
-        v-if="isRiderSaving"
+        v-if="isSaving"
         src="../../../assets/images/icons/rhombus.png"
         alt="rhombus"
         class="rhombus"
