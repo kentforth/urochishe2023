@@ -56,7 +56,7 @@ const props = defineProps({
   }
 })
 
-const { isRiderSaving, isDisabled } = toRefs(props)
+const { isDisabled } = toRefs(props)
 
 let isPhoneValid  = true
 const ridersCollection = collection(db, 'riders')
@@ -209,7 +209,7 @@ async function onSubmit (errors: any) {
     @submit=""
     @invalid-submit="onInvalidSubmit"
   >
-    <div :class="isRiderSaving ? 'blur' : ''">
+    <div :class="isSaving ? 'blur' : ''">
       <!--NAME-->
       <div class="form__item">
         <label for="name">ИМЯ:**</label>
@@ -326,7 +326,7 @@ async function onSubmit (errors: any) {
     <div class="buttons">
       <button
         :disabled="isDisabled"
-        :class="isRiderSaving ? 'blur' : ''"
+        :class="isSaving ? 'blur' : ''"
         class="btn-save"
         @click="onSubmit(errors)"
       >

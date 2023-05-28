@@ -21,7 +21,6 @@ import Form from "@/components/pages/Registration/Form.vue";
 import TotalRiders from '@/components/pages/Registration/TotalRiders.vue'
 import Agreement from "@/components/pages/Registration/Agreement.vue";
 
-const form = ref<Form | null>(null)
 const riders = ref<IRider[]>([])
 const formType = ref('registration')
 const riderNumber = ref(0)
@@ -103,7 +102,6 @@ async function getRiders () {
 
       <!--FORM-->
       <Form
-        ref="form"
         :is-disabled="isSubmitDisabled"
         @save-rider="saveRider"
       />
