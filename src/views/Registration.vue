@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import {
   ref,
+  computed,
   onBeforeMount,
-  onBeforeUnmount, computed
+  onBeforeUnmount
 } from "vue";
 
 import "firebase/firestore";
 import { db }  from '@/services/firebase'
 import {
   query,
-  doc,
-  collection,
   getDocs,
-  addDoc
+  collection
 } from 'firebase/firestore'
 
 import type { IRider } from '@/types';
@@ -26,6 +25,10 @@ const formType = ref('registration')
 const riderNumber = ref<string | number>('0')
 const isSubmitDisabled = ref(true)
 const isExcelButtonVisible = ref(false)
+
+const reversedRiders = computed(() => {
+  return riders.value.reverse()
+})
 
 onBeforeMount(() => {
   window.addEventListener("keydown", showPasswordPrompt);
@@ -64,7 +67,6 @@ async function getRiders () {
 }
 
 
-
 </script>
 
 <template>
@@ -74,14 +76,13 @@ async function getRiders () {
   >
     <!--DOWNLOAD ToEXCEL    -->
     <div class="download-buttons">
-<!--      <JsonExcel
-          v-if="isExcelButtonVisible"
-          :data="bicycles"
+      <download-excel
+          :data="reversedRiders"
           class="btn-excel"
           name="riders.xls"
-          :export-fields="{
+          :exportFields="{
           Номер: 'number',
-          Фамилия: 'last_name',
+          Фамилия: 'lastName',
           Имя: 'name',
           Возраст: 'age',
           Пол: 'gender',
@@ -91,7 +92,7 @@ async function getRiders () {
         }"
       >
         <span>Сохранить в excel</span>
-      </JsonExcel>-->
+      </download-excel>
     </div>
 
     <div class="wrapper" v-if="formType === 'registration'">
