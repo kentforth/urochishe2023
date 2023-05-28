@@ -15,6 +15,10 @@ import type { IRider, ICheckbox} from "@/types";
 import { Form, Field } from 'vee-validate';
 import RadioButton from "@/components/RadioButton.vue";
 
+import mtb from "@/assets/images/icons/mtb.png"
+import road from "@/assets/images/icons/road.png"
+import singleSpeed from "@/assets/images/icons/single-speed.png"
+
 const emit = defineEmits(['save-rider'])
 
 const props = defineProps({
@@ -42,9 +46,23 @@ const form = ref<IRider>({
   isAgree: false,
   lastName: "",
   position: '0',
-  category: "Гонщик",
+  category: "гонщик",
   bicycleType: "ROAD"
 })
+const bicycleTypes = ref([
+  {
+    id: 1,
+    image: road
+  },
+  {
+    id: 2,
+    image: mtb
+  },
+  {
+    id: 3,
+    image: singleSpeed
+  }
+])
 
 const genders: ICheckbox[] = [
   {
@@ -59,15 +77,15 @@ const genders: ICheckbox[] = [
 const bicycles: ICheckbox[] = [
   {
     id: 1,
-    title: 'ROAD',
+    title: '(ROAD)',
   },
   {
     id: 2,
-    title: 'MTB',
+    title: '(MTB)',
   },
   {
     id: 3,
-    title: 'Fixed/Single',
+    title: '(Fixed/Single)',
   }
 ]
 const categories: ICheckbox[] = [
@@ -115,16 +133,15 @@ function setIsAgree (agreement: boolean) {
 }
 
 function setGender (gender: string) {
-  form.value.gender = gender === "right" ? "Ж" : "М";
+  form.value.gender = gender
 }
 
 function setCategory (category: string) {
-  form.value.category = category === "right" ? "Исследователь" : "Гонщик";
+  form.value.category = category
 }
 
 function setBicycleType (type: string) {
   form.value.bicycleType = type;
-  console.log('FORM', form.value)
 }
 
 function onSubmit (values: any) {
@@ -178,10 +195,11 @@ function onSubmit (values: any) {
       </div>
 
       <!--GENDER-->
-      <div class="form__item_gender">
+      <div class="form__gender">
         <label for="#">ПОЛ:</label>
         <RadioButtonGroup
           :checkboxes="genders"
+          @set-value="setGender"
         />
       </div>
 
@@ -234,22 +252,12 @@ function onSubmit (values: any) {
 
       <!--BICYLE TYPE-->
       <label>ВЕЛОСИПЕД:</label>
-      <div class="form__bicycle-type-container">
-        <div class="form__bicycle-type">
-          <img src="../../../assets/images/icons/rigid-big.svg" alt="rigid" />
-          <img
-            src="../../../assets/images/icons/hardteil-big.svg"
-            alt="rigid"
-            class="form__bicycle-type_hardteil"
-          />
-        </div>
-        <RadioButtonGroup :checkboxes="bicycles" @change-checkbox="setBicycleType"/>
-<!--        <RadioButtonGroup
-          title-left="(RIGID)"
-          title-right="(HARDTAIL)"
-          checkbox-right-class="bicycle-right"
-          @choose-checkbox="setBicycleType"
-        />-->
+      <div class="form__bicycle-type-wrapper">
+        <RadioButtonGroup 
+          :checkboxes="bicycles" 
+          :bicycle-types="bicycleTypes"
+          @set-value="setBicycleType"
+        />
       </div>
 
       <!--CATEGORY-->
@@ -258,7 +266,7 @@ function onSubmit (values: any) {
         <RadioButtonGroup
           :checkboxes="categories"
           class="form__category-item"
-          @choose-checkbox="setCategory"
+          @set-value="setCategory"
         />
       </div>
     </div>
@@ -305,6 +313,48 @@ function onSubmit (values: any) {
     width: 90%;
     margin: 20px 0 20px 0;
   }
+  
+  &__gender, 
+  &__category  {
+    .radio-button-group {
+      width: max-content;
+      margin-top: 10px;
+    }
+    
+    .radio-button-group :deep(.radio-button-group__item) {
+      button {
+        justify-content: flex-start;
+        margin-left: 0;
+        width: 90px;
+      }
+    }
+
+    .radio-button-group :deep(.radio-button-group__title) {
+      margin-left: 25%;
+    }
+
+    .radio-button-group :deep(.radio-button-group__item):last-child {
+      margin-left: 10px;
+    }
+  }
+
+  &__category {
+    .radio-button-group :deep(.radio-button-group__title) {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    
+    .radio-button-group :deep(.radio-button-group__item) {
+      flex-direction: row-reverse;
+      align-items: center;
+      width: max-content;
+      
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+  
 
   &__item {
     display: flex;
@@ -323,89 +373,11 @@ function onSubmit (values: any) {
         width: 100%;
       }
     }
-
-    &_gender {
-      .checkbox {
-        margin-top: 10px;
-
-        &__left {
-          span {
-            margin-left: 24px;
-          }
-        }
-      }
-    }
   }
 
   &__item:nth-child(4) {
     margin-top: rem(20px);
     width: rem(130px);
-  }
-
-  &__bicycle-type {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-
-    img {
-      height: 160px;
-
-      @include responsive(tab-port) {
-        height: 80px;
-      }
-    }
-    &_hardteil {
-      margin-left: 100px;
-      transform: translateY(-10px);
-
-      @include responsive(tab-port) {
-        margin-left: 30px;
-      }
-    }
-  }
-
-  &__bicycle-type-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .checkbox {
-      display: grid;
-      grid-template-columns: 90px 206px 118px !important;
-
-      .checkbox__left,
-      .checkbox__right {
-        .checkbox__checked {
-          transform: translateX(18px);
-        }
-      }
-
-      .checkbox__left,
-      .checkbox__right {
-        align-items: center;
-
-        @include responsive(phone) {
-          grid-gap: 15px;
-        }
-      }
-
-      @include responsive(tab-port) {
-        grid-template-columns: 80px 50px 80px !important;
-      }
-
-      span {
-        margin-left: 0 !important;
-      }
-
-      .bicycle-right {
-        grid-column: 3;
-        margin-left: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-    }
   }
 
   &__category {
@@ -426,7 +398,7 @@ function onSubmit (values: any) {
     }
   }
 
-  &__category-item > .checkbox__left,
+/*  &__category-item > .checkbox__left,
   &__category-item > .checkbox__right {
     display: grid;
     align-items: center;
@@ -443,7 +415,7 @@ function onSubmit (values: any) {
         width: 100px;
       }
     }
-  }
+  }*/
 
   .error {
     color: $red;

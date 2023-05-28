@@ -14,6 +14,8 @@ import Form from "@/components/pages/Registration/Form.vue";
 import TotalRiders from '@/components/pages/Registration/TotalRiders.vue'
 import Agreement from "@/components/pages/Registration/Agreement.vue";
 
+
+
 const form = ref<IRider>({
   age: null,
   city: "",

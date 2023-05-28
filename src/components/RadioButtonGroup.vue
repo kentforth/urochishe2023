@@ -7,33 +7,37 @@ import {
 
 import type { ICheckbox} from "@/types";
 
-const emit = defineEmits(['change-checkbox'])
+const emit = defineEmits(['set-value'])
 
 const props = defineProps({
   checkboxes: {
     type: Array as PropType<ICheckbox[]>,
     default: {},
     required: true
+  },
+  bicycleTypes: {
+    type: Array,
+    default: []
   }
 })
 
-const { checkboxes } = toRefs(props)
-
 let checkboxId = ref(1)
 
-function changeCheckbox (id: number, title: string) {
+function setCheckboxValue (id: number, title: string) {
   checkboxId.value = id
-  emit('change-checkbox', title)
+  emit('set-value', title)
 }
 
 </script>
 
 <template>
   <div class="radio-button-group">
-    <div v-for="checkbox in checkboxes" class="radio-button-group__item">
+    <div v-for="(checkbox, index) in checkboxes" class="radio-button-group__item">
+      <img :src="bicycleTypes[index].image" alt="bicycleType" v-if="bicycleTypes.length" class="radio-button-group__image">
+      
       <div class="radio-button-group__title">{{checkbox.title}}</div>
       
-      <button @click="changeCheckbox(checkbox.id, checkbox.title)">
+      <button @click="setCheckboxValue(checkbox.id, checkbox.title)">
         <img 
           v-if="checkboxId === checkbox.id"
           src="../assets/images/icons/checkbox-checked.svg"
@@ -53,20 +57,53 @@ function changeCheckbox (id: number, title: string) {
 
 <style scoped lang="scss">
 .radio-button-group {
+  width: 100%;
   display: flex;
   align-items: flex-end;
-  
-  &__title {
-    background: red;
-    margin-left: 10px;
+
+  @media (max-width: $tablet) {
+    display: grid;
+    grid-template-columns: 1fr;
   }
   
+  
+  
   &__item {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-items: flex-end;
-    width: 66px;
+
+    @media (max-width: $tablet) {
+      margin-bottom: 10px;
+      align-items: center;
+    }
+  }
+  
+  &__title, button {
+    margin-left: 20%;
+    
+    @media (max-width: $tablet) {
+      margin-left: 5%;
+    }
+
+    @media (min-width: $desktop) {
+      margin-left: 30%;
+    }
+  }
+  
+  &__image {
+    width: 170px;
+    
+    @media (min-width: $laptop) {
+      width: 200px;
+    }
+    
+    @media (min-width: $desktop) {
+      width: 300px;
+    }
+    
   }
   
   button {
