@@ -23,7 +23,7 @@ import Agreement from "@/components/pages/Registration/Agreement.vue";
 
 const riders = ref<IRider[]>([])
 const formType = ref('registration')
-const riderNumber = ref(0)
+const riderNumber = ref<string | number>('0')
 const isSubmitDisabled = ref(true)
 const isExcelButtonVisible = ref(false)
 
