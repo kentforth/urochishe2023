@@ -1,4 +1,6 @@
-export interface IRider {
+import { CollectionReference, DocumentData } from 'firebase/firestore'
+
+export interface IRider extends CollectionReference, DocumentData {
   age: number | string | null
   name: string
   city: string
