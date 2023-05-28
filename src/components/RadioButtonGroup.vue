@@ -8,6 +8,11 @@ import type { PropType } from "vue";
 
 const emit = defineEmits(['set-value'])
 
+interface IBicycleTypes {
+  id: number,
+  image: string
+}
+
 const props = defineProps({
   checkboxes: {
     type: Array as PropType<ICheckbox[]>,
@@ -15,7 +20,7 @@ const props = defineProps({
     required: true
   },
   bicycleTypes: {
-    type: Array,
+    type: Array as PropType<IBicycleTypes[]>,
     default: []
   }
 })
