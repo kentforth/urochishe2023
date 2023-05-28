@@ -77,6 +77,7 @@ async function getRiders () {
     <!--DOWNLOAD ToEXCEL    -->
     <div class="download-buttons">
       <download-excel
+          v-if="isExcelButtonVisible"
           :data="reversedRiders"
           class="btn-excel"
           name="riders.xls"
@@ -96,7 +97,7 @@ async function getRiders () {
     </div>
 
     <div class="wrapper" v-if="formType === 'registration'">
-      <TotalRiders :riders="riders" />
+      <TotalRiders :riders="riders" v-if="riders.length"/>
 
       <!--AGREEMENT-->
       <Agreement @set-agreement="setAgreement" />
