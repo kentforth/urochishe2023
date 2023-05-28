@@ -145,6 +145,7 @@ function setBicycleType (type: string) {
 }
 
 function onSubmit (values: any) {
+  console.log('VALUES', values)
   /*form.value.$touch();
   if (this.$v.form.$error || this.isButtonDisabled) {
     return;

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import {
   ref,
-  toRefs,
-  PropType,
 } from "vue";
 
 import type { ICheckbox} from "@/types";
+import type { PropType } from "vue";
 
 const emit = defineEmits(['set-value'])
 
