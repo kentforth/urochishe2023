@@ -1,4 +1,4 @@
-export function useValidateName(name: string) {
+export function useValidateName(name: any) {
   if (name === '') {
     return 'Введите имя'
   }
@@ -6,7 +6,7 @@ export function useValidateName(name: string) {
   return true
 }
 
-export function useValidateLastName(lastName: string) {
+export function useValidateLastName(lastName: any) {
   if (lastName === '') {
     return 'Введите фамилию'
   }
@@ -14,8 +14,8 @@ export function useValidateLastName(lastName: string) {
   return true
 }
 
-export function useValidateAge(age: string) {
-  if (age === '') {
+export function useValidateAge(age: any) {
+  if (age === '' || age === null) {
     return 'Введите возраст'
   }
 
@@ -26,7 +26,7 @@ export function useValidateAge(age: string) {
   return true
 }
 
-export function useValidateCity(city: string) {
+export function useValidateCity(city: any) {
   if (city === '') {
     return 'Введите город'
   }

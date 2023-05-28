@@ -57,7 +57,7 @@ const { formType, isRiderSaving} = toRefs(props)
 const isDisabled = true
 
 const form = ref<IRider>({
-  age: '',
+  age: null,
   city: '',
   name: '',
   phone: '',
@@ -164,7 +164,7 @@ function setBicycleType (type: string) {
   form.value.bicycleType = type;
 }
 
-function onInvalidSubmit ({ errors }) {
+function onInvalidSubmit ({ errors }: any) {
   scrollToField(Object.keys(errors)[0])
 }
 

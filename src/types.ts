@@ -1,5 +1,5 @@
 export interface IRider {
-  age: number | null
+  age: number | string | null
   name: string
   city: string
   phone: string
