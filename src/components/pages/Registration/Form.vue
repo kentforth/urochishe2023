@@ -168,9 +168,9 @@ function onInvalidSubmit ({ errors }: any) {
   scrollToField(Object.keys(errors)[0])
 }
 
-function scrollToField (id) {
+function scrollToField (id: string) {
   const el = document.getElementById(id);
-  el.scrollIntoView({behavior: "smooth", block: 'center'});
+  el?.scrollIntoView({behavior: "smooth", block: 'center'});
 }
 
 function onSubmit (values: any) {
