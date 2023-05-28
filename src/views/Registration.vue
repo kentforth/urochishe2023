@@ -58,7 +58,7 @@ async function getRiders () {
   riders.value = []
   const q = await query(collection(db, 'riders'));
   const docs = await getDocs(q)
-  docs.forEach((doc) => {
+  docs.forEach((doc: any) => {
     riders.value.push(doc.data())
   });
 }
