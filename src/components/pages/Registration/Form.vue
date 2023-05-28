@@ -22,7 +22,11 @@ import {
 } from "@/services/vee-validate";
 
 import { vMaska } from "maska"
+
 import "firebase/firestore";
+import { db }  from '@/services/firebase'
+import { 
+  query, doc, collection, getDocs, addDoc, CollectionReference } from 'firebase/firestore'
 
 import RadioButtonGroup from "../../RadioButtonGroup.vue";
 
@@ -33,10 +37,10 @@ import road from "@/assets/images/icons/road.png"
 import singleSpeed from "@/assets/images/icons/single-speed.png"
 
 configure({
-  validateOnBlur: true, // controls if `blur` events should trigger validation with `handleChange` handler
-  validateOnChange: true, // controls if `change` events should trigger validation with `handleChange` handler
+  validateOnBlur: false, // controls if `blur` events should trigger validation with `handleChange` handler
+  validateOnChange: false, // controls if `change` events should trigger validation with `handleChange` handler
   validateOnInput: true, // controls if `input` events should trigger validation with `handleChange` handler
-  validateOnModelUpdate: true, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
+  validateOnModelUpdate: false, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
 });
 
 const emit = defineEmits(['save-rider'])
@@ -54,21 +58,22 @@ const props = defineProps({
 
 const { formType, isRiderSaving} = toRefs(props)
 
-const isDisabled = true
 let isPhoneValid  = true
+const isDisabled = true
+const ridersCollection = collection(db, 'riders')
 
 const form = ref<IRider>({
   age: null,
   city: '',
   name: '',
   phone: '',
-  number: 0,
+  number: 1,
   gender: "М",
   isAgree: false,
   lastName: '',
   position: '0',
   category: "гонщик",
-  bicycleType: "ROAD"
+  bicycleType: "(ROAD)"
 })
 const bicycleTypes = ref([
   {
@@ -85,6 +90,7 @@ const bicycleTypes = ref([
   }
 ])
 
+const riders = ref<IRider[]>([])
 const genders: ICheckbox[] = [
   {
     id: 1,
@@ -120,35 +126,6 @@ const categories: ICheckbox[] = [
   }
 ]
 
-/*watch('$v.$error', (newUsername) => {
-  // Do something with the updated value.
-});*/
-
-/*  watch: {
-    "$v.$error": {
-      handler() {
-        this.isDisabled = this.isFormValid();
-      },
-      deep: true,
-    },
-  },*/
-
-/*  computed: {
-    isButtonDisabled() {
-      return this.isDisabled || !this.form.isAgree;
-    },
-  },*/
-
-/*  validations: {
-    form: {
-      name: { required },
-      last_name: { required },
-      age: { required },
-      city: { required },
-      phone: { required },
-    },
-  },*/
-
 function setIsAgree (agreement: boolean) {
   form.value.isAgree = agreement;
 }
@@ -171,51 +148,62 @@ function scrollToField (id: string) {
 }
 
 function checkPhone () {
-  if (form.value.phone === '') {
-    const el = document.getElementById('phone');
+  if (form.value.phone === '' || form.value.phone === null) {
     isPhoneValid = false
+    const el = document.getElementById('phone');
     el?.scrollIntoView({behavior: "smooth", block: 'center'});
+    
+    return
   }
+  
+  isPhoneValid = true
+}
+
+function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+async function getRiders () {
+  const q = await query(collection(db, 'riders'));
+  
+  const docs = await getDocs(q)
+  riders.value = []
+  docs.forEach((doc) => {
+    riders.value.push(doc.data())
+  });
 }
 
 function onInvalidSubmit ({ errors }: any) {
-  console.log('ERRORS', errors)
-
   scrollToField(Object.keys(errors)[0])
-  
+
   if (!form.value.phone) {
     isPhoneValid = false
   }
 }
 
-function onSubmit (values: any) {
-  console.log('VALUES', values)
+async function onSubmit (errors: any) {
   checkPhone()
-  if (!form.value.phone) return
-  console.log('SUCCESS')
-  /*form.value.$touch();
-  if (this.$v.form.$error || this.isButtonDisabled) {
-    return;
-  }
-  form.value.age = +form.value.age;
-  emit("save-rider", form.value);*/
+
+  if (!form.value.phone || Object.keys(errors).length !== 0) return
+  
+  form.value.position = getRandomNumber(0, 100)
+  console.log('SUCCESS', form.value)
+
+  await getRiders()
+  console.log('RIDERS LENGTH', riders.value.length)
+  form.value.number = riders.value.length ? riders.value.length + 1 : 1 
+  
+  console.log('VALUE', form.value.number)
+  
+  await addDoc(ridersCollection, form.value)
 }
-
-
-/*    isFormValid() {
-      const isValid = !Object.values(this.$v.form.$model).every(
-          (x) => x !== null && x !== ""
-      );
-      return isValid;
-    },*/
-
 </script>
 
 <template>
   <Form
     v-slot="{ errors }"
     class="form"
-    @submit="onSubmit"
+    @submit=""
     @invalid-submit="onInvalidSubmit"
   >
     <div :class="isRiderSaving ? 'blur' : ''">
@@ -299,7 +287,7 @@ function onSubmit (values: any) {
           data-maska="+7 (###) ###-####"
           placeholder="999 9999999"
           :class="{'form__input-error' : !isPhoneValid}"
-          @input="isPhoneValid = true"
+          @input="checkPhone"
         />
         <span v-if="!isPhoneValid" class="form__error">Введите номер телефона</span>
       </div>
@@ -334,9 +322,9 @@ function onSubmit (values: any) {
     <!--BUTTONS-->
     <div class="buttons" v-if="formType === 'registration'">
       <button
-        type="submit"
         :class="isRiderSaving ? 'blur' : ''"
         class="btn-save"
+        @click="onSubmit(errors)"
       >
           <img
           src="../../../assets/images/icons/btn-finish.svg"
