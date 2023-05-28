@@ -9,6 +9,7 @@ import polar from "@/assets/images/main/icons/polar.png"
 import proto from "@/assets/images/main/icons/proto.png"
 import fatrat from "@/assets/images/main/icons/fatrat.png"
 import zukling from "@/assets/images/main/icons/zukling.png"
+import neutrino from "@/assets/images/main/icons/neutrino.png"
 import sarmatina from "@/assets/images/main/icons/sarmatina.png"
 import itsmybike from "@/assets/images/main/icons/itsmybike.png"
 
@@ -57,6 +58,11 @@ const sponsors = ref([
     alt: "itsmybike",
     url: "https://vk.com/itsmybike",
     image: itsmybike,
+  },
+  {
+    alt: "neutrino",
+    url: "https://vk.com/neutrino_components",
+    image: neutrino,
   },
   {
     alt: "proto",
