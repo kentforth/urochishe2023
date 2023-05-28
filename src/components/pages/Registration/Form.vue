@@ -6,18 +6,38 @@ import {
   computed,
 } from "vue";
 
+import {
+  Form,
+  Field,
+  useField,
+  configure,
+  ErrorMessage
+} from 'vee-validate';
+
+import { 
+  useValidateAge,
+  useValidateName,
+  useValidateCity,
+  useValidateLastName
+} from "@/services/vee-validate";
+
+import { vMaska } from "maska"
 import "firebase/firestore";
-// import { vMaska } from "maska"
+
 import RadioButtonGroup from "../../RadioButtonGroup.vue";
 
 import type { IRider, ICheckbox} from "@/types";
 
-import { Form, Field } from 'vee-validate';
-import RadioButton from "@/components/RadioButton.vue";
-
 import mtb from "@/assets/images/icons/mtb.png"
 import road from "@/assets/images/icons/road.png"
 import singleSpeed from "@/assets/images/icons/single-speed.png"
+
+configure({
+  validateOnBlur: true, // controls if `blur` events should trigger validation with `handleChange` handler
+  validateOnChange: true, // controls if `change` events should trigger validation with `handleChange` handler
+  validateOnInput: true, // controls if `input` events should trigger validation with `handleChange` handler
+  validateOnModelUpdate: true, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
+});
 
 const emit = defineEmits(['save-rider'])
 
@@ -37,14 +57,14 @@ const { formType, isRiderSaving} = toRefs(props)
 const isDisabled = true
 
 const form = ref<IRider>({
-  age: null,
-  city: "",
-  name: "",
-  phone: "",
+  age: '',
+  city: '',
+  name: '',
+  phone: '',
   number: 0,
   gender: "М",
   isAgree: false,
-  lastName: "",
+  lastName: '',
   position: '0',
   category: "гонщик",
   bicycleType: "ROAD"
@@ -144,6 +164,15 @@ function setBicycleType (type: string) {
   form.value.bicycleType = type;
 }
 
+function onInvalidSubmit ({ errors }) {
+  scrollToField(Object.keys(errors)[0])
+}
+
+function scrollToField (id) {
+  const el = document.getElementById(id);
+  el.scrollIntoView({behavior: "smooth", block: 'center'});
+}
+
 function onSubmit (values: any) {
   console.log('VALUES', values)
   /*form.value.$touch();
@@ -165,34 +194,43 @@ function onSubmit (values: any) {
 </script>
 
 <template>
-  <Form class="form" @submit="onSubmit">
+  <Form
+    v-slot="{ errors }"
+    class="form"
+    @submit="onSubmit"
+    @invalid-submit="onInvalidSubmit"
+  >
     <div :class="isRiderSaving ? 'blur' : ''">
       <!--NAME-->
       <div class="form__item">
         <label for="name">ИМЯ:**</label>
         <Field
-          autocomplete="off"
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Введите имя"
           v-model.trim="form.name"
+          id="name"
+          type="text"
+          name="name"
+          :rules="useValidateName"
+          placeholder="Введите имя"
+          autocomplete="off"
+          :class="{'form__input-error' : errors.name}"
         />
-<!--        <p class="error" v-if="$v.form.name.$error">Введите имя</p>-->
+        <ErrorMessage name="name" class="form__error"/>
       </div>
 
       <!--LAST NAME-->
       <div class="form__item">
         <label for="last_name">ФАМИЛИЯ:</label>
         <Field
-          type="text"
-          autocomplete="off"
-          id="last_name"
-          placeholder="Введите фамилию"
-          name="lastName"
           v-model.trim="form.lastName"
+          id="lastName"
+          type="text"
+          name="lastName"
+          :rules="useValidateLastName"
+          placeholder="Введите фамилию"
+          autocomplete="off"
+          :class="{'form__input-error' : errors.lastName}"
         />
-<!--        <p class="error" v-if="$v.form.last_name.$error">Введите фамилию</p>-->
+        <ErrorMessage name="lastName" class="form__error"/>
       </div>
 
       <!--GENDER-->
@@ -208,32 +246,38 @@ function onSubmit (values: any) {
       <div class="form__item">
         <label for="age">ВОЗРАСТ:</label>
         <Field
-          type="number"
+          v-model.trim="form.age"
           id="age"
           name="age"
-          maxLength="2"
-          v-model.trim="form.age"
-          value="0"
+          type="number"
+          :rules="useValidateAge"
+          :class="{'form__input-error' : errors.age}"
         />
-<!--        <p class="error" v-if="$v.form.age.$error">Введите возраст</p>-->
+        <ErrorMessage name="age" class="form__error"/>
       </div>
 
       <!--CITY-->
       <div class="form__item">
         <label>ГОРОД:</label>
         <Field
+          v-model.trim="form.city"
           id="city"
           name="city"
-          v-model.trim="form.city"
+          :rules="useValidateCity"
           autocomplete="off"
+          :class="{'form__input-error' : errors.city}"
         />
-<!--        <p class="error" v-if="$v.form.city.$error">Введите возраст</p>-->
+        <ErrorMessage name="city" class="form__error"/>
       </div>
 
       <!--PHONE-->
       <div class="form__item">
         <label>НОМЕР ТЕЛЕФОНА:</label>
-        <input data-maska="+7 (###) ###-####" placeholder="999 9999999" />
+        <input 
+          v-maska
+          data-maska="+7 (###) ###-####" 
+          placeholder="999 9999999" 
+        />
 <!--          <MaskedInput
               v-model.trim="form.phone"
               name="phone"
@@ -278,17 +322,17 @@ function onSubmit (values: any) {
         type="submit"
         :class="isRiderSaving ? 'blur' : ''"
         class="btn-save"
-        :disabled="true"
       >
-        <!--        <img
-          v-if="!isButtonDisabled"
+          <img
           src="../../../assets/images/icons/btn-finish.svg"
           alt="btn-finish"
-        />-->
-        <img
+          class="form__btn-save"
+        />
+<!--        <img
+          v-else
           src="../../../assets/images/icons/btn-finish-disabled.svg"
           alt="btn-finish-disabled"
-        />
+        />-->
       </button>
       <img
         v-if="isRiderSaving"
@@ -378,7 +422,7 @@ function onSubmit (values: any) {
 
   &__item:nth-child(4) {
     margin-top: rem(20px);
-    width: rem(130px);
+    width: rem(250px);
   }
 
   &__category {
@@ -399,27 +443,29 @@ function onSubmit (values: any) {
     }
   }
 
-/*  &__category-item > .checkbox__left,
-  &__category-item > .checkbox__right {
-    display: grid;
-    align-items: center;
-    margin-bottom: 20px;
+  &__btn-save {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    margin-bottom: 40px;
 
-    span {
-      grid-column: 2;
-      grid-row: span 2;
-      margin-left: 0;
+    &:disabled {
+      cursor: default;
     }
 
-    .checkbox {
-      &__container {
-        width: 100px;
+    img {
+      @include responsive(tab-port) {
+        width: 250px;
       }
     }
-  }*/
+  }
 
-  .error {
-    color: $red;
+  &__error {
+    color: $red-bright;
+  }
+  
+  &__input-error {
+    border: 2px solid $red-bright !important;
   }
 
   .buttons {
@@ -427,23 +473,6 @@ function onSubmit (values: any) {
     width: 100%;
     display: flex;
     justify-content: center;
-
-    .btn-save {
-      cursor: pointer;
-      outline: none;
-      border: none;
-      margin-bottom: 40px;
-
-      &:disabled {
-        cursor: default;
-      }
-
-      img {
-        @include responsive(tab-port) {
-          width: 250px;
-        }
-      }
-    }
   }
 }
 

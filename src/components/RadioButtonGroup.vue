@@ -3,15 +3,17 @@ import {
   ref,
 } from "vue";
 
-import type { ICheckbox} from "@/types";
+import type { ICheckbox } from "@/types";
 import type { PropType } from "vue";
-
-const emit = defineEmits(['set-value'])
 
 interface IBicycleTypes {
   id: number,
   image: string
 }
+
+const emit = defineEmits(['set-value'])
+
+
 
 const props = defineProps({
   checkboxes: {
