@@ -55,6 +55,7 @@ const props = defineProps({
 const { formType, isRiderSaving} = toRefs(props)
 
 const isDisabled = true
+let isPhoneValid  = true
 
 const form = ref<IRider>({
   age: null,
@@ -164,17 +165,34 @@ function setBicycleType (type: string) {
   form.value.bicycleType = type;
 }
 
-function onInvalidSubmit ({ errors }: any) {
-  scrollToField(Object.keys(errors)[0])
-}
-
 function scrollToField (id: string) {
   const el = document.getElementById(id);
   el?.scrollIntoView({behavior: "smooth", block: 'center'});
 }
 
+function checkPhone () {
+  if (form.value.phone === '') {
+    const el = document.getElementById('phone');
+    isPhoneValid = false
+    el?.scrollIntoView({behavior: "smooth", block: 'center'});
+  }
+}
+
+function onInvalidSubmit ({ errors }: any) {
+  console.log('ERRORS', errors)
+
+  scrollToField(Object.keys(errors)[0])
+  
+  if (!form.value.phone) {
+    isPhoneValid = false
+  }
+}
+
 function onSubmit (values: any) {
   console.log('VALUES', values)
+  checkPhone()
+  if (!form.value.phone) return
+  console.log('SUCCESS')
   /*form.value.$touch();
   if (this.$v.form.$error || this.isButtonDisabled) {
     return;
@@ -275,18 +293,15 @@ function onSubmit (values: any) {
         <label>НОМЕР ТЕЛЕФОНА:</label>
         <input 
           v-maska
-          data-maska="+7 (###) ###-####" 
-          placeholder="999 9999999" 
+          v-model="form.phone"
+          id="phone"
+          name="phone"
+          data-maska="+7 (###) ###-####"
+          placeholder="999 9999999"
+          :class="{'form__input-error' : !isPhoneValid}"
+          @input="isPhoneValid = true"
         />
-<!--          <MaskedInput
-              v-model.trim="form.phone"
-              name="phone"
-              mask="\+\7 (111) 111-1111"
-              placeholder="Введите номер телефона"
-              type="tel"
-              autocomplete="off"
-          />-->
-<!--          <p class="error" v-if="$v.form.phone.$error">Введите номер телефона</p>-->
+        <span v-if="!isPhoneValid" class="form__error">Введите номер телефона</span>
       </div>
 
       <p class="error notion">
