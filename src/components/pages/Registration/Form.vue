@@ -186,7 +186,7 @@ async function onSubmit (errors: any) {
 
   if (!form.value.phone || Object.keys(errors).length !== 0) return
   
-  form.value.position = getRandomNumber(0, 100)
+  form.value.position = getRandomNumber(0, 90)
 
   try {
     await getRiders()

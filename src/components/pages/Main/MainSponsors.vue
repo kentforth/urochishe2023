@@ -5,6 +5,7 @@ import fil from "@/assets/images/main/icons/fil.png"
 import ejik from "@/assets/images/main/icons/ejik.png"
 import noji from "@/assets/images/main/icons/noji.png"
 import nerpa from "@/assets/images/main/icons/nerpa.png"
+import shulz from "@/assets/images/main/icons/shulz.png"
 import polar from "@/assets/images/main/icons/polar.png"
 import proto from "@/assets/images/main/icons/proto.png"
 import fatrat from "@/assets/images/main/icons/fatrat.png"
@@ -69,6 +70,11 @@ const sponsors = ref([
     url: "https://vk.com/protostudia",
     image: proto,
   },
+  {
+    alt: "shulz",
+    url: "https://shulz.ru/",
+    image: shulz,
+  },
 ])
 
 </script>
@@ -124,6 +130,13 @@ const sponsors = ref([
     &:nth-child(9) {
       img {
         width: 70px;
+      }
+    }
+
+    &:nth-child(12) {
+      img {
+        max-width: 200px;
+        height: 40px; 
       }
     }
   }
