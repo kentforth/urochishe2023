@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { 
+  ref,
+  computed
+} from 'vue'
 
 import { useRouter } from 'vue-router';
 
@@ -8,7 +11,11 @@ import btnDetailsHover from "@/assets/images/main/btn-details-hover.png"
 
 const router = useRouter()
 
-const isHovered = ref(false)
+const isHover = ref(false)
+
+const image = computed(() => {
+  return isHover.value ? btnDetailsHover : btnDetails
+})
 
 function goToDetails () {
   router.push("/details");
@@ -21,25 +28,14 @@ function goToDetails () {
     
     <div class="details__buttons">
       <button
-          v-if="isHovered"
-          class="details__btn"
-          @click="goToDetails"
-          @mouseleave="isHovered = !isHovered"
+        class="details__btn"
+        @click="goToDetails"
+        @mouseover="isHover = !isHover"
+        @mouseleave="isHover = !isHover"
       >
         <img
-            :src="btnDetailsHover"
-            alt="btn-details"
-        />
-      </button>
-      <button
-          v-else
-          class="details__btn"
-          @click="goToDetails"
-          @mouseover="isHovered = !isHovered"
-      >
-        <img
-          :src="btnDetails"
-          alt="btn-details-hover"
+          :src="image"
+          alt="btn-details"
         />
       </button>
     </div>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   ref,
-  watch,
   toRefs,
   computed,
 } from "vue";
@@ -9,7 +8,6 @@ import {
 import {
   Form,
   Field,
-  useField,
   configure,
   ErrorMessage
 } from 'vee-validate';
@@ -39,6 +37,8 @@ import type { IRider, ICheckbox} from "@/types";
 import mtb from "@/assets/images/icons/mtb.png"
 import road from "@/assets/images/icons/road.png"
 import singleSpeed from "@/assets/images/icons/single-speed.png"
+import button from "@/assets/images/icons/btn-finish.svg"
+import buttonHover from "@/assets/images/icons/btn-finish-disabled.svg"
 
 configure({
   validateOnBlur: false, // controls if `blur` events should trigger validation with `handleChange` handler
@@ -90,7 +90,9 @@ const bicycleTypes = ref([
 ])
 
 const isSaving = ref(false)
+const isHover = ref(false)
 const riders = ref<IRider[]>([])
+
 const genders: ICheckbox[] = [
   {
     id: 1,
@@ -125,6 +127,10 @@ const categories: ICheckbox[] = [
     title: 'исследователь',
   }
 ]
+
+const image = computed(() => {
+  return isDisabled.value ? buttonHover : button
+})
 
 function setIsAgree (agreement: boolean) {
   form.value.isAgree = agreement;
@@ -331,15 +337,8 @@ async function onSubmit (errors: any) {
         @click="onSubmit(errors)"
       >
         <img
-          v-if="isDisabled"
-          src="../../../assets/images/icons/btn-finish-disabled.svg"
+          :src="image"
           alt="btn-finish-disabled"
-        />
-        <img
-          v-else
-          src="../../../assets/images/icons/btn-finish.svg"
-          alt="btn-finish"
-          class="form__btn-save"
         />
       </button>
       <img

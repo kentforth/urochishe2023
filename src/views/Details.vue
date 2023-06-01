@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { 
   ref,
+  computed,
   onBeforeMount
 } from "vue";
 
 import { useRouter } from 'vue-router';
 
-import btnUnderstand from "@/assets/images/icons/btn-understand.svg"
-import btnUnderstandHover from "@/assets/images/icons/btn-understand-hover.svg"
+import button from "@/assets/images/icons/btn-understand.svg"
+import buttonHover from "@/assets/images/icons/btn-understand-hover.svg"
 
 const router = useRouter()
 
-const isButtonHovered = ref(false)
+const isHover = ref(false)
+
+const image = computed(() => {
+  return isHover.value ? buttonHover : button
+})
 
 function goToMainPage () {
   router.push("/");
@@ -372,24 +377,13 @@ onBeforeMount(() => {
       </div>
 
       <button
-        v-if="isButtonHovered"
         class="content__btn-understand"
         @click="goToMainPage"
-        @mouseleave="isButtonHovered = !isButtonHovered"
+        @mouseover="isHover = !isHover"
+        @mouseleave="isHover = !isHover"
       >
         <img
-          :src="btnUnderstandHover"
-          alt="btn-understand"
-        />
-      </button>
-      <button
-        v-else
-        class="content__btn-understand"
-        @click="goToMainPage"
-        @mouseover="isButtonHovered = !isButtonHovered"
-      >
-        <img
-          :src="btnUnderstand"
+          :src="image"
           alt="btn-understand"
         />
       </button>

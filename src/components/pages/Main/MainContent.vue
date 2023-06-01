@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { 
+  ref,
+  computed
+} from 'vue'
 
 import { useRouter } from 'vue-router';
 
@@ -8,7 +11,11 @@ import btnRegisterHover from "@/assets/images/main/btn-register-hover.png"
 
 const router = useRouter()
 
-const isButtonRegisterHover = ref(false)
+const isHover = ref(false)
+
+const image = computed(() => {
+  return isHover.value ? btnRegisterHover : btnRegister
+})
 
 function goToRegistration () {
   router.push("/registration");
@@ -20,24 +27,13 @@ function goToRegistration () {
     <img src="../../../assets/images/main/wood.png" alt="wood" class="main-content__wood" />
 
     <button
-      v-if="isButtonRegisterHover"
       class="main-content__register"
       @click="goToRegistration"
-      @mouseleave="isButtonRegisterHover = !isButtonRegisterHover"
+      @mouseover="isHover = !isHover"
+      @mouseleave="isHover = !isHover"
     >
       <img
-        :src="btnRegisterHover"
-        alt="btn-register"
-      />
-    </button>
-    <button
-        v-else
-        class="main-content__register"
-        @click="goToRegistration"
-        @mouseover="isButtonRegisterHover = !isButtonRegisterHover"
-    >
-      <img
-        :src="btnRegister"
+        :src="image"
         alt="btn-register"
       />
     </button>
