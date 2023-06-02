@@ -450,7 +450,11 @@ async function onSubmit (errors: any) {
 
   &__item:nth-child(4) {
     margin-top: rem(20px);
-    width: rem(250px);
+    width: rem(160px);
+    
+    @media (max-width: $tablet) {
+      width: 100%;
+    }
   }
 
   

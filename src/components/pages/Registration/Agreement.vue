@@ -79,7 +79,7 @@ function changeAgreement (isAgree: boolean) {
   padding: 0 6%;
   
   @media (max-width: $tablet) {
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   h1 {
