@@ -93,6 +93,11 @@ function getImageUrl (type: string) {
       @include responsive(tab-port) {
         width: 25%;
       }
+      
+      @media (max-width: $tablet) {
+        bottom: -6px;
+      }
+      
     }
   }
 }
