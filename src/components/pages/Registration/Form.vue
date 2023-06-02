@@ -77,15 +77,18 @@ const form = ref<IRider>({
 const bicycleTypes = ref([
   {
     id: 1,
-    image: road
+    image: road,
+    tooltipText: 'Любые велосипеды с колесами 700c и рулем бараном'
   },
   {
     id: 2,
-    image: mtb
+    image: mtb,
+    tooltipText: 'Любые MTB велосипеды'
   },
   {
     id: 3,
-    image: singleSpeed
+    image: singleSpeed,
+    tooltipText: 'Любые велосипеды с фиксированной или одной передачей. Размер колес не имеет значения'
   }
 ])
 
@@ -311,7 +314,8 @@ async function onSubmit (errors: any) {
       <label>ВЕЛОСИПЕД:</label>
       <div class="form__bicycle-type-wrapper">
         <RadioButtonGroup 
-          :checkboxes="bicycles" 
+          :checkboxes="bicycles"
+          :has-tooltip="true"
           :bicycle-types="bicycleTypes"
           @set-value="setBicycleType"
         />
@@ -456,8 +460,6 @@ async function onSubmit (errors: any) {
       width: 100%;
     }
   }
-
-  
 
   &__category-item {
     display: flex;

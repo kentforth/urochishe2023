@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
-  ref,
+  ref, 
+  toRefs
 } from "vue";
 
 import type { ICheckbox } from "@/types";
@@ -8,12 +9,11 @@ import type { PropType } from "vue";
 
 interface IBicycleTypes {
   id: number,
-  image: string
+  image: string,
+  tooltipText?: string
 }
 
 const emit = defineEmits(['set-value'])
-
-
 
 const props = defineProps({
   checkboxes: {
@@ -24,26 +24,58 @@ const props = defineProps({
   bicycleTypes: {
     type: Array as PropType<IBicycleTypes[]>,
     default: []
+  },
+  hasTooltip: {
+    type: Boolean,
+    default: false
   }
 })
 
 let checkboxId = ref(1)
+const isTooltipShow = ref(false)
+let currentTooltipText = ''
+let currentTooltipIndex = ref(0)
+
+const { hasTooltip } = toRefs(props)
 
 function setCheckboxValue (id: number, title: string) {
   checkboxId.value = id
   emit('set-value', title)
 }
 
+function showTooltip (id: number, currentIndex: number) {
+  if (!hasTooltip.value) {
+    return false
+  }
+  
+  if (!isTooltipShow.value) return false
+  
+  return id === currentIndex;
+}
+
+function setCurrentTooltip (index: number, text: string) {
+  isTooltipShow.value = true
+  currentTooltipText = text
+  currentTooltipIndex.value = index
+}
 </script>
 
 <template>
   <div class="radio-button-group">
     <div v-for="(checkbox, index) in checkboxes" class="radio-button-group__item">
+      <Transition name="fade">
+        <span class="radio-button-group__tooltip" v-if="showTooltip(index, currentTooltipIndex)">{{currentTooltipText}}</span>
+      </Transition>
+      
       <img :src="bicycleTypes[index].image" alt="bicycleType" v-if="bicycleTypes.length" class="radio-button-group__image">
       
       <div class="radio-button-group__title">{{checkbox.title}}</div>
       
-      <button @click="setCheckboxValue(checkbox.id, checkbox.title)">
+      <button 
+        @click="setCheckboxValue(checkbox.id, checkbox.title)" 
+        @mouseover="setCurrentTooltip(index, bicycleTypes[index].tooltipText)"
+        @mouseleave="isTooltipShow = false"
+      >
         <img 
           v-if="checkboxId === checkbox.id"
           src="../assets/images/icons/checkbox-checked.svg"
@@ -86,6 +118,7 @@ function setCheckboxValue (id: number, title: string) {
   
   &__item {
     width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -133,6 +166,10 @@ function setCheckboxValue (id: number, title: string) {
           margin-left: 116px;
         }
 
+        .radio-button-group__tooltip {
+          left: 60px;
+        }
+
         button {
           margin-left: 107px;
         }
@@ -172,7 +209,6 @@ function setCheckboxValue (id: number, title: string) {
     @media (min-width: $desktop) {
       width: 300px;
     }
-    
   }
   
   button {
@@ -200,5 +236,50 @@ function setCheckboxValue (id: number, title: string) {
       height: 59px;
     }
   }
+  
+  &__tooltip {
+    position: absolute;
+    background-color: $black-900;
+    color: $white;
+    border-radius: 6px;
+    padding: 8px 16px;
+    bottom: 100px;
+    left: 20px;
+    transition: 0.3s ease;
+    font-weight: normal;
+    
+    @media (min-width: $tablet) {
+      left: 30px;
+    }
+
+    @media (min-width: $laptop) {
+      left: 20px;
+    }
+
+    @media (min-width: $desktop) {
+      left: 30px;
+    }
+    
+    &:after {
+      /*content: " ";
+      position: relative;
+      top: 27px; !* At the bottom of the tooltip *!
+      right:30px;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: red transparent transparent transparent;*/
+    }
+  }
 }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 </style>

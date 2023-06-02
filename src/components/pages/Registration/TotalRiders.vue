@@ -97,7 +97,6 @@ function getImageUrl (type: string) {
       @media (max-width: $tablet) {
         bottom: -6px;
       }
-      
     }
   }
 }
