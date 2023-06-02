@@ -333,7 +333,7 @@ async function onSubmit (errors: any) {
       <button
         :disabled="isDisabled"
         :class="isSaving ? 'blur' : ''"
-        class="btn-save"
+        class="form__btn-save"
         @click="onSubmit(errors)"
       >
         <img
@@ -390,6 +390,26 @@ async function onSubmit (errors: any) {
     }
   }
 
+  &__gender {
+    .radio-button-group :deep(.radio-button-group__title) {
+      margin-left: 0;
+      margin-right: 35px;
+
+      @media (min-width: $tablet) {
+        margin-left: 20px;
+        margin-right: 0;
+      }
+    }
+
+    .radio-button-group :deep(.radio-button-group__item:last-child) {
+      margin: 0;
+
+      @media (min-width: $tablet) {
+        margin-left: 20px;
+      }
+    }
+  }
+  
   &__category {
     .radio-button-group :deep(.radio-button-group__title) {
       margin-left: 10px;
@@ -405,9 +425,10 @@ async function onSubmit (errors: any) {
         margin-left: 0;
       }
     }
+
+    margin-top: 20px;
   }
   
-
   &__item {
     display: flex;
     flex-direction: column;
@@ -432,13 +453,7 @@ async function onSubmit (errors: any) {
     width: rem(250px);
   }
 
-  &__category {
-    margin-top: 20px;
-
-    .checkbox {
-      margin-top: 20px;
-    }
-  }
+  
 
   &__category-item {
     display: flex;
@@ -461,8 +476,10 @@ async function onSubmit (errors: any) {
     }
 
     img {
-      @include responsive(tab-port) {
-        width: 250px;
+      width: 400px;
+      
+      @media (max-width: $mobile-portrait) {
+        width: 220px;
       }
     }
   }

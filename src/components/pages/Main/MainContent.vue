@@ -62,6 +62,10 @@ function goToRegistration () {
     
     img {
       width: 300px;
+
+      @media (max-width: 360px) {
+        width: 250px;
+      }
       
       @media (min-width: 768px) {
         width: 600px;

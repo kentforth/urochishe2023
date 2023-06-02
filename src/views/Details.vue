@@ -435,18 +435,18 @@ onBeforeMount(() => {
       }
     }
 
-    &__button {
-      color: $pink;
-      font-size: 1rem;
-      display: inline;
-    }
-
     &__btn-understand {
       margin: 0 auto;
 
-      @include responsive(phone) {
-        img {
-          width: 280px;
+      img {
+        width: 250px;
+
+        @media (max-width: 360px) {
+          width: 200px;
+        }
+
+        @media (min-width: 768px) {
+          width: 300px;
         }
       }
     }

@@ -67,7 +67,7 @@ function setCheckboxValue (id: number, title: string) {
   display: flex;
   align-items: flex-end;
 
-  @media (max-width: $tablet) {
+  @media (max-width: $tablet - 1px) {
     display: grid;
     grid-template-columns: 1fr;
   }
@@ -97,6 +97,16 @@ function setCheckboxValue (id: number, title: string) {
     }
 
     &:nth-child(1) {
+      @media (min-width: $tablet + 1px) {
+        .radio-button-group__title {
+          margin-left: 67px;
+        }
+
+        button {
+          margin-left: 66px;
+        }
+      }
+      
       @media (min-width: $desktop) {
         .radio-button-group__title {
           margin-left: 135px;
@@ -109,6 +119,15 @@ function setCheckboxValue (id: number, title: string) {
     }
     
     &:nth-child(2) {
+      @media (min-width: $tablet + 1px) {
+        .radio-button-group__title {
+          margin-left: 60px;
+        }
+
+        button {
+          margin-left: 52px;
+        }
+      }
       @media (min-width: $desktop) {
         .radio-button-group__title {
           margin-left: 116px;
@@ -121,6 +140,16 @@ function setCheckboxValue (id: number, title: string) {
     }
     
     &:nth-child(3) {
+      @media (min-width: $tablet + 1px) {
+        .radio-button-group__title {
+          margin-left: 46px;
+        }
+
+        button {
+          margin-left: 66px;
+        }
+      }
+      
       @media (min-width: $desktop) {
         .radio-button-group__title {
           margin-left: 116px;
@@ -131,10 +160,7 @@ function setCheckboxValue (id: number, title: string) {
         }
       }
     }
-    
   }
-  
-  
   
   &__image {
     width: 170px;
