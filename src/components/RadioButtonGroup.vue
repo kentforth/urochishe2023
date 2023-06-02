@@ -10,7 +10,7 @@ import type { PropType } from "vue";
 interface IBicycleTypes {
   id: number,
   image: string,
-  tooltipText?: string
+  tooltipText: string
 }
 
 const emit = defineEmits(['set-value'])
