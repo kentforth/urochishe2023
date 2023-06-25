@@ -25,10 +25,6 @@ function changeAgreement (isAgree: boolean) {
             target="_blank"
             >Tinkoff банк</a
           >
-          <br />
-          <a href="https://donate.stream/PURPLEXBLVZE" target="_blank"
-            >ЮMoney</a
-          >
         </span>
       </p>
     </div>
