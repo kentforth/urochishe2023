@@ -132,7 +132,8 @@ const categories: ICheckbox[] = [
 ]
 
 const image = computed(() => {
-  return isDisabled.value ? buttonHover : button
+  // return isDisabled.value ? buttonHover : button
+  return buttonHover
 })
 
 function setIsAgree (agreement: boolean) {
@@ -215,7 +216,6 @@ async function onSubmit (errors: any) {
   <Form
     v-slot="{ errors }"
     class="form"
-    @submit=""
     @invalid-submit="onInvalidSubmit"
   >
     <div :class="isSaving ? 'blur' : ''">
@@ -335,7 +335,7 @@ async function onSubmit (errors: any) {
     <!--BUTTONS-->
     <div class="buttons">
       <button
-        :disabled="isDisabled"
+        :disabled="true"
         :class="isSaving ? 'blur' : ''"
         class="form__btn-save"
         @click="onSubmit(errors)"
