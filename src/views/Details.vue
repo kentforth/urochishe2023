@@ -26,8 +26,6 @@ function downloadFiles () {
   alert("Файлы будут доступны с 12 июля 20.00");
 }
 
-// console.log('sadfdf')
-
 function goToHome () {
   router.push("/");
 }
